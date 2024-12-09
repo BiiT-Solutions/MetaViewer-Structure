@@ -1,0 +1,13 @@
+${AnsiColor.BLUE}${AnsiStyle.BOLD}
+
+    _____     _       _____ _                      _____ _               _
+   |     |___| |_ ___|  |  |_|___ _ _ _ ___ ___   |   __| |_ ___ _ _ ___| |_ _ _ ___ ___
+   | | | | -_|  _| .'|  |  | | -_| | | | -_|  _|  |__   |  _|  _| | |  _|  _| | |  _| -_|
+   |_|_|_|___|_| |__,|\___/|_|___|_____|___|_|    |_____|_| |_| |___|___|_| |___|_| |___|
+
+
+${AnsiColor.BRIGHT_WHITE}${AnsiStyle.BOLD}
+::  MetaViewer Structure  ::  (v${application.version})
+::  Java                   ::  (v${java.version})
+::  Spring Boot            ::  (v${spring-boot.version})
+${AnsiStyle.NORMAL}

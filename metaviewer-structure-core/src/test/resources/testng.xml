@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" verbose="1" name="ControlTower">
+
+    <listeners>
+        <listener class-name="com.biit.metaviewer.TestListener"/>
+    </listeners>
+
+    <test name="MetaViewer" enabled="true" preserve-order="true">
+        <groups>
+            <run>
+                <exclude name="cadt"/>
+                <exclude name="cadtScore"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.biit.metaviewer.examples.RandomCadtGenerationTest"/>
+            <class name="com.biit.metaviewer.tests.CadtScoreTest"/>
+        </classes>
+    </test>
+</suite>

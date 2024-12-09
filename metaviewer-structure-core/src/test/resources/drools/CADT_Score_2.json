@@ -1,0 +1,76 @@
+{
+  "class" : "com.biit.drools.form.DroolsSubmittedForm",
+  "tag" : "CADT_Score",
+  "children" : [ {
+    "class" : "com.biit.drools.form.DroolsSubmittedCategory",
+    "tag" : "archetype",
+    "text" : "archetype",
+    "children" : [ {
+      "class" : "com.biit.drools.form.DroolsSubmittedGroup",
+      "tag" : "inspiration",
+      "text" : "inspiration",
+      "children" : [ {
+        "class" : "com.biit.drools.form.DroolsSubmittedQuestion",
+        "tag" : "nhm_card_choice1",
+        "text" : "nhm_card_choice1",
+        "children" : [ ],
+        "answers" : [ "innovator" ]
+      }, {
+        "class" : "com.biit.drools.form.DroolsSubmittedQuestion",
+        "tag" : "nhm_card_choice2",
+        "text" : "nhm_card_choice2",
+        "children" : [ ],
+        "answers" : [ "visionary" ]
+      }, {
+        "class" : "com.biit.drools.form.DroolsSubmittedQuestion",
+        "tag" : "nhm_card_choice3",
+        "text" : "nhm_card_choice3",
+        "children" : [ ],
+        "answers" : [ "strategist" ]
+      } ],
+      "repeatable" : "false",
+      "numberOfIterations" : "0"
+    }, {
+      "class" : "com.biit.drools.form.DroolsSubmittedGroup",
+      "tag" : "structure",
+      "text" : "structure",
+      "children" : [ {
+        "class" : "com.biit.drools.form.DroolsSubmittedQuestion",
+        "tag" : "nhm_card_choice4",
+        "text" : "nhm_card_choice4",
+        "children" : [ ],
+        "answers" : [ "banker" ]
+      }, {
+        "class" : "com.biit.drools.form.DroolsSubmittedQuestion",
+        "tag" : "nhm_card_choice5",
+        "text" : "nhm_card_choice5",
+        "children" : [ ],
+        "answers" : [ "tradesman" ]
+      }, {
+        "class" : "com.biit.drools.form.DroolsSubmittedQuestion",
+        "tag" : "nhm_card_choice6",
+        "text" : "nhm_card_choice6",
+        "children" : [ ],
+        "answers" : [ "scientist" ]
+      } ],
+      "repeatable" : "false",
+      "numberOfIterations" : "0"
+    } ]
+  }, {
+    "class" : "com.biit.drools.form.DroolsSubmittedCategory",
+    "tag" : "competency",
+    "text" : "competency",
+    "children" : [ {
+      "class" : "com.biit.drools.form.DroolsSubmittedQuestion",
+      "tag" : "competency_choice",
+      "text" : "competency_choice",
+      "children" : [ ],
+      "answers" : [ "business-minded", "decisiveness", "engagement", "future", "independence", "initiative", "multicultural-sensitivity", "planification", "problem-analysis", "tenacity" ]
+    } ]
+  } ],
+  "applicationName" : "",
+  "organization" : "Aperture Science",
+  "submittedBy" : "admin@test.com",
+  "version" : 2,
+  "formVariables" : "{\n  \"/DroolsSubmittedForm[@label='CADT_Score']\" : {\n    \"ArchetypeCompetenceValue\" : 40.0,\n    \"BankerScore\" : 101.0,\n    \"StrategistScore\" : 49.0,\n    \"LeaderScore\" : 0.0,\n    \"TradesmanScore\" : 0.0,\n    \"ScientistScore\" : 89.0,\n    \"NegativeArchetypeCompetenceValue\" : 20.0,\n    \"PreferenceArchetypeBonus\" : 6.0,\n    \"BalancedScore20\" : 16.0,\n    \"StructureInspirationScore\" : 33.0,\n    \"BalancedScore10\" : 33.0,\n    \"BalancedScore22\" : 56.0,\n    \"Score\" : 285.0,\n    \"ReceptiveScore\" : 0.0,\n    \"BalancedScore11\" : 110.0,\n    \"BalancedScore12\" : 85.0,\n    \"ComboBonus\" : 9.0,\n    \"InnovatorScore\" : 0.0,\n    \"nhmCardChoice8\" : \"leader\",\n    \"VisionaryScore\" : -20.0,\n    \"nhmCardChoice4\" : \"receptive\",\n    \"AdaptabilityActionScore\" : 33.0\n  }\n}"
+}
