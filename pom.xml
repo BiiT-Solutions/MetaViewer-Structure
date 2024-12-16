@@ -5,7 +5,7 @@
     <groupId>com.biit</groupId>
     <artifactId>metaviewer-structure</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.10</version>
+    <version>0.1.11-SNAPSHOT</version>
     <name>MetaViewer Structure</name>
 
     <parent>
@@ -37,7 +37,7 @@
     <scm>
         <connection>scm:git:git.biit-solutions.com:Java/MetaViewerStructure.git</connection>
         <developerConnection>scm:git:git.biit-solutions.com:Java/MetaViewerStructure.git</developerConnection>
-        <tag>metaviewer-structure-0.1.10</tag>
+        <tag>metaviewer-structure</tag>
     </scm>
 
 
