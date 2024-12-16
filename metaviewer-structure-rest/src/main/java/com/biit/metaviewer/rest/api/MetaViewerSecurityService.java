@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Service("securityService")
 public class MetaViewerSecurityService extends SecurityService {
 
-    private static final String VIEWER = "PIVOTVIEWER_VIEWER";
-    private static final String ADMIN = "PIVOTVIEWER_ADMIN";
-    private static final String EDITOR = "PIVOTVIEWER_EDITOR";
+    private static final String VIEWER = "METAVIEWERSTRUCTURE_VIEWER";
+    private static final String ADMIN = "METAVIEWERSTRUCTURE_ADMIN";
+    private static final String EDITOR = "METAVIEWERSTRUCTURE_EDITOR";
 
     private String viewerPrivilege = null;
     private String adminPrivilege = null;
