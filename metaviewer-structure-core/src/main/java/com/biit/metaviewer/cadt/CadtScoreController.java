@@ -35,7 +35,8 @@ public class CadtScoreController {
     private static final String FORM_NAME = "CADT_Score";
     private static final String PIVOTVIEWER_IMAGE_FILE = "./five_colors/five_colors.dzc";
     private static final String PIVOTVIEWER_LINK = "/cadt";
-    private static final String PIVOTVIEWER_FILE = "cadt.cxml";
+    private static final String PIVOTVIEWER_FILE = "cadt-score.cxml";
+    private static final String METAVIEWER_FILE = "cadt-score.json";
     private static final String CREATED_AT_FACET = "submittedAt";
 
     private static final String FORM_SCORE_VARIABLE = "Score";
@@ -159,6 +160,10 @@ public class CadtScoreController {
             try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
                     + File.separator + PIVOTVIEWER_FILE, false), StandardCharsets.UTF_8)))) {
                 out.println(ObjectMapperFactory.generateXml(collection));
+            }
+            try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
+                    + File.separator + METAVIEWER_FILE, false), StandardCharsets.UTF_8)))) {
+                out.println(ObjectMapperFactory.generateJson(collection));
             }
         } catch (Exception e) {
             MetaViewerLogger.errorMessage(this.getClass(), e);
