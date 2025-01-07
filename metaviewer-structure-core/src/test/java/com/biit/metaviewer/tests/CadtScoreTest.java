@@ -4,7 +4,7 @@ import com.biit.drools.form.DroolsSubmittedForm;
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.TestListener;
-import com.biit.metaviewer.cadt.CadtController;
+import com.biit.metaviewer.cadt.CadtScoreController;
 import com.biit.utils.file.FileReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,7 +33,7 @@ public class CadtScoreTest extends AbstractTestNGSpringContextTests {
     protected static final String OUTPUT_FOLDER = System.getProperty("java.io.tmpdir") + File.separator + "MetaViewer";
 
     @Autowired
-    private CadtController cadtController;
+    private CadtScoreController cadtController;
 
     private static final String DROOLS_FORM_FILE_PATH = "drools/CADT_Score_2.json";
 

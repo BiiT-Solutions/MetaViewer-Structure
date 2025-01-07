@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Controller
-public class CadtController {
+public class CadtScoreController {
     private static final String FORM_NAME = "CADT_Score";
     private static final String PIVOTVIEWER_IMAGE_FILE = "./five_colors/five_colors.dzc";
     private static final String PIVOTVIEWER_LINK = "/cadt";
@@ -56,7 +56,7 @@ public class CadtController {
     @Value("${metaviewer.samples}")
     private String outputFolder;
 
-    public CadtController(CadtProvider cadtProvider) {
+    public CadtScoreController(CadtProvider cadtProvider) {
         this.cadtProvider = cadtProvider;
     }
 
@@ -105,7 +105,7 @@ public class CadtController {
 
         final List<Facet<?>> facets = new ArrayList<>();
         facets.addAll(basicData(droolsSubmittedForm.getSubmittedAt()));
-        facets.addAll(createCadtValueFacets(droolsSubmittedForm.getChildrenRecursive(DroolsSubmittedQuestion.class), droolsSubmittedForm.getSubmittedAt()));
+        facets.addAll(createCadtScoreFacets(formVariables, droolsSubmittedForm.getSubmittedAt()));
         final Item item = new Item(getColor((double) formVariables.get(FORM_SCORE_VARIABLE)), PIVOTVIEWER_LINK, droolsSubmittedForm.getSubmittedBy());
         item.getFacets().addAll(facets);
         return item;
@@ -120,33 +120,16 @@ public class CadtController {
     }
 
 
-    private List<Facet<?>> createCadtValueFacets(List<DroolsSubmittedQuestion> questions, LocalDateTime submittedTime) {
+    private List<Facet<?>> createCadtScoreFacets(Map<String, Object> formVariables, LocalDateTime submittedTime) {
         //Score by archetypes
         final List<Facet<?>> facets = new ArrayList<>();
 
-
-        for (DroolsSubmittedQuestion question : questions) {
-            final List<CadtArchetypes> selectedArchetypes = new ArrayList<>();
-            final List<CadtCompetences> selectedCompetences = new ArrayList<>();
-            //Adding archetypes.
-            if (Objects.equals(question.getName(), CadtQuestion.QUESTION1.getTag())
-                    || Objects.equals(question.getName(), CadtQuestion.QUESTION3.getTag())
-                    || Objects.equals(question.getName(), CadtQuestion.QUESTION4.getTag())
-                    || Objects.equals(question.getName(), CadtQuestion.QUESTION6.getTag())) {
-                facets.add(new Facet<>(question.getAnswers().iterator().next(), new BooleanType(true)));
-                selectedArchetypes.add(CadtArchetypes.fromAnswer(question.getAnswers().iterator().next()));
-            }
-
-            //Adding competences
-            if (Objects.equals(question.getName(), CadtQuestion.COMPETENCES.getTag())) {
-                for (String answer : question.getAnswers()) {
-                    facets.add(new Facet<>(answer, new BooleanType(true)));
-                    selectedCompetences.add(CadtCompetences.fromAnswer(answer));
-                }
+        for (CadtVariables variable : CadtVariables.values()) {
+            final Double value = (Double) formVariables.get(variable.getVariable());
+            if (value != null) {
+                facets.add(new Facet<>(variable.getVariable(), new NumberType(value)));
             }
         }
-
-
         return facets;
     }
 
