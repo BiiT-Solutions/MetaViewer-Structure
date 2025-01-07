@@ -27,9 +27,9 @@ import java.util.List;
 
 
 @SpringBootTest
-@Test(groups = "cadtScore")
+@Test(groups = "cadt")
 @Listeners(TestListener.class)
-public class CadtScoreTest extends AbstractTestNGSpringContextTests {
+public class CadtTest extends AbstractTestNGSpringContextTests {
     protected static final String OUTPUT_FOLDER = System.getProperty("java.io.tmpdir") + File.separator + "MetaViewer";
 
     @Autowired
@@ -61,11 +61,11 @@ public class CadtScoreTest extends AbstractTestNGSpringContextTests {
         final Collection collection = cadtController.createCollection(droolsSubmittedForms);
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
-                + File.separator + "cadt-score-single.cxml")), true)) {
+                + File.separator + "cadt-single.cxml")), true)) {
             out.println(ObjectMapperFactory.generateXml(collection));
         }
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
-                + File.separator + "cadt-score-single.json")), true)) {
+                + File.separator + "cadt-single.json")), true)) {
             out.println(ObjectMapperFactory.generateJson(collection));
         }
     }
@@ -74,11 +74,11 @@ public class CadtScoreTest extends AbstractTestNGSpringContextTests {
     public void convertFactsToMetaViewer() throws IOException {
         final Collection collection = cadtController.createCollection();
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
-                + File.separator + "cadt-score.cxml")), true)) {
+                + File.separator + "cadt.cxml")), true)) {
             out.println(ObjectMapperFactory.generateXml(collection));
         }
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
-                + File.separator + "cadt-score.json")), true)) {
+                + File.separator + "cadt.json")), true)) {
             out.println(ObjectMapperFactory.generateJson(collection));
         }
     }
