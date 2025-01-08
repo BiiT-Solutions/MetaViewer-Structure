@@ -1,6 +1,6 @@
 package com.biit.metaviewer.cadt;
 
-public enum CadtCompetences {
+public enum CadtCompetence {
     DISCIPLINE("discipline"),
     CLIENT_ORIENTED("client-oriented"),
     ENGAGEMENT("engagement"),
@@ -29,8 +29,7 @@ public enum CadtCompetences {
 
     private final String tag;
 
-
-    CadtCompetences(String answer) {
+    CadtCompetence(String answer) {
         this.tag = answer;
     }
 
@@ -38,9 +37,9 @@ public enum CadtCompetences {
         return tag;
     }
 
-    public static CadtCompetences fromAnswer(String answer) {
-        for (CadtCompetences archetype : CadtCompetences.values()) {
-            if (archetype.getTag().equalsIgnoreCase(answer)) {
+    public static CadtCompetence fromTag(String tag) {
+        for (CadtCompetence archetype : CadtCompetence.values()) {
+            if (archetype.getTag().equalsIgnoreCase(tag)) {
                 return archetype;
             }
         }

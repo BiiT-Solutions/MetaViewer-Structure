@@ -8,7 +8,6 @@ import com.biit.metaviewer.Item;
 import com.biit.metaviewer.exceptions.InvalidFormException;
 import com.biit.metaviewer.provider.CadtProvider;
 import com.biit.metaviewer.types.DateTimeType;
-import com.biit.metaviewer.types.NumberType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public abstract class CadtController {
     protected static final String FORM_NAME = "CADT_Score";
     private static final String PIVOTVIEWER_IMAGE_FILE = "./five_colors/five_colors.dzc";
 
-    private static final String CREATED_AT_FACET = "submittedAt";
+    protected static final String CREATED_AT_FACET = "submittedAt";
 
     private static final String FORM_SCORE_VARIABLE = "Score";
 
@@ -55,14 +54,8 @@ public abstract class CadtController {
         return collection;
     }
 
-    private List<FacetCategory> createCadtFacetsCategories() {
-        final List<FacetCategory> facetCategories = new ArrayList<>();
-        facetCategories.add(new FacetCategory(CREATED_AT_FACET, DateTimeType.PIVOT_VIEWER_DEFINITION));
-        for (CadtVariables variable : CadtVariables.values()) {
-            facetCategories.add(new FacetCategory(variable.getVariable(), NumberType.PIVOT_VIEWER_DEFINITION));
-        }
-        return facetCategories;
-    }
+    protected abstract List<FacetCategory> createCadtFacetsCategories();
+
 
     protected Item generateItem(DroolsSubmittedForm droolsSubmittedForm) {
         if (droolsSubmittedForm == null) {

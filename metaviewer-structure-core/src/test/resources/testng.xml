@@ -15,7 +15,7 @@
         <classes>
             <class name="com.biit.metaviewer.examples.RandomCadtGenerationTest"/>
             <class name="com.biit.metaviewer.tests.CadtScoreTest"/>
-            <class name="com.biit.metaviewer.tests.CadtTest"/>
+            <class name="com.biit.metaviewer.tests.CadtValueTest"/>
         </classes>
     </test>
 </suite>

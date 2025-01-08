@@ -3,9 +3,11 @@ package com.biit.metaviewer.cadt;
 import com.biit.drools.form.DroolsSubmittedForm;
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.Facet;
+import com.biit.metaviewer.FacetCategory;
 import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.biit.metaviewer.provider.CadtProvider;
+import com.biit.metaviewer.types.DateTimeType;
 import com.biit.metaviewer.types.NumberType;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +20,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,6 @@ public class CadtScoreController extends CadtController {
     private static final String PIVOTVIEWER_LINK = "/cadt";
     private static final String PIVOTVIEWER_FILE = "cadt-score.cxml";
     private static final String METAVIEWER_FILE = "cadt-score.json";
-
-    private static final String FORM_SCORE_VARIABLE = "Score";
 
     @Value("${metaviewer.samples}")
     private String outputFolder;
@@ -52,11 +51,22 @@ public class CadtScoreController extends CadtController {
 
     @Override
     protected void populateFacets(List<Facet<?>> facets, DroolsSubmittedForm droolsSubmittedForm, Map<String, Object> formVariables) {
-        facets.addAll(createCadtScoreFacets(formVariables, droolsSubmittedForm.getSubmittedAt()));
+        facets.addAll(createCadtScoreFacets(formVariables));
     }
 
 
-    private List<Facet<?>> createCadtScoreFacets(Map<String, Object> formVariables, LocalDateTime submittedTime) {
+    @Override
+    protected List<FacetCategory> createCadtFacetsCategories() {
+        final List<FacetCategory> facetCategories = new ArrayList<>();
+        facetCategories.add(new FacetCategory(CREATED_AT_FACET, DateTimeType.PIVOT_VIEWER_DEFINITION));
+        for (CadtVariables variable : CadtVariables.values()) {
+            facetCategories.add(new FacetCategory(variable.getVariable(), NumberType.PIVOT_VIEWER_DEFINITION));
+        }
+        return facetCategories;
+    }
+
+
+    private List<Facet<?>> createCadtScoreFacets(Map<String, Object> formVariables) {
         //Score by archetypes
         final List<Facet<?>> facets = new ArrayList<>();
 

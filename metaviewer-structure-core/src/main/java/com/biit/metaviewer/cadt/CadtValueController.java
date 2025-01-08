@@ -4,10 +4,12 @@ import com.biit.drools.form.DroolsSubmittedForm;
 import com.biit.drools.form.DroolsSubmittedQuestion;
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.Facet;
+import com.biit.metaviewer.FacetCategory;
 import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.biit.metaviewer.provider.CadtProvider;
 import com.biit.metaviewer.types.BooleanType;
+import com.biit.metaviewer.types.DateTimeType;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,48 +41,86 @@ public class CadtValueController extends CadtController {
         super(cadtProvider);
     }
 
+
     @PostConstruct
     public void onStartup() {
         //Update data when started.
         populateSamplesFolder();
     }
 
+
     @Override
     protected String getPivotViewerLink() {
         return PIVOTVIEWER_LINK;
     }
 
+
     @Override
     protected void populateFacets(List<Facet<?>> facets, DroolsSubmittedForm droolsSubmittedForm, Map<String, Object> formVariables) {
-        facets.addAll(createCadtValueFacets(droolsSubmittedForm.getChildrenRecursive(DroolsSubmittedQuestion.class), droolsSubmittedForm.getSubmittedAt()));
+        facets.addAll(createCadtValueFacets(droolsSubmittedForm.getChildrenRecursive(DroolsSubmittedQuestion.class)));
     }
 
 
-    private List<Facet<?>> createCadtValueFacets(List<DroolsSubmittedQuestion> questions, LocalDateTime submittedTime) {
+    @Override
+    protected List<FacetCategory> createCadtFacetsCategories() {
+        final List<FacetCategory> facetCategories = new ArrayList<>();
+        facetCategories.add(new FacetCategory(CREATED_AT_FACET, DateTimeType.PIVOT_VIEWER_DEFINITION));
+        for (CadtArchetype archetype : CadtArchetype.values()) {
+            facetCategories.add(new FacetCategory(archetype.getTag(), BooleanType.PIVOT_VIEWER_DEFINITION));
+        }
+        for (CadtCompetence competence : CadtCompetence.values()) {
+            facetCategories.add(new FacetCategory(competence.getTag(), BooleanType.PIVOT_VIEWER_DEFINITION));
+        }
+        return facetCategories;
+    }
+
+
+    private List<Facet<?>> createCadtValueFacets(List<DroolsSubmittedQuestion> questions) {
         //Score by archetypes
         final List<Facet<?>> facets = new ArrayList<>();
 
 
+        final List<CadtArchetype> selectedArchetypes = new ArrayList<>();
+        final List<CadtCompetence> selectedCompetences = new ArrayList<>();
         for (DroolsSubmittedQuestion question : questions) {
-            final List<CadtArchetypes> selectedArchetypes = new ArrayList<>();
-            final List<CadtCompetences> selectedCompetences = new ArrayList<>();
             //Adding archetypes.
             if (Objects.equals(question.getName(), CadtQuestion.QUESTION1.getTag())
                     || Objects.equals(question.getName(), CadtQuestion.QUESTION3.getTag())
                     || Objects.equals(question.getName(), CadtQuestion.QUESTION4.getTag())
                     || Objects.equals(question.getName(), CadtQuestion.QUESTION6.getTag())) {
-                facets.add(new Facet<>(question.getAnswers().iterator().next(), new BooleanType(true)));
-                selectedArchetypes.add(CadtArchetypes.fromAnswer(question.getAnswers().iterator().next()));
+                final CadtArchetype archetype = CadtArchetype.fromTag(question.getAnswers().iterator().next());
+                if (archetype != null) {
+                    facets.add(new Facet<>(archetype.getTag(), new BooleanType(true)));
+                    selectedArchetypes.add(archetype);
+                }
             }
 
             //Adding competences
             if (Objects.equals(question.getName(), CadtQuestion.COMPETENCES.getTag())) {
                 for (String answer : question.getAnswers()) {
-                    facets.add(new Facet<>(answer, new BooleanType(true)));
-                    selectedCompetences.add(CadtCompetences.fromAnswer(answer));
+                    final CadtCompetence competence = CadtCompetence.fromTag(answer);
+                    if (competence != null) {
+                        facets.add(new Facet<>(competence.getTag(), new BooleanType(true)));
+                        selectedCompetences.add(competence);
+                    }
                 }
             }
         }
+
+        //Adding non-selected archetypes.
+        for (CadtArchetype archetype : CadtArchetype.values()) {
+            if (!selectedArchetypes.contains(archetype)) {
+                facets.add(new Facet<>(archetype.getTag(), new BooleanType(false)));
+            }
+        }
+
+        //Adding non-selected competences.
+        for (CadtCompetence competence : CadtCompetence.values()) {
+            if (!selectedCompetences.contains(competence)) {
+                facets.add(new Facet<>(competence.getTag(), new BooleanType(false)));
+            }
+        }
+
         return facets;
     }
 
