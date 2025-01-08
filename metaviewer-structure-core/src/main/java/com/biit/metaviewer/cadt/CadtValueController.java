@@ -1,12 +1,13 @@
 package com.biit.metaviewer.cadt;
 
 import com.biit.drools.form.DroolsSubmittedForm;
+import com.biit.drools.form.DroolsSubmittedQuestion;
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.Facet;
 import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.biit.metaviewer.provider.CadtProvider;
-import com.biit.metaviewer.types.NumberType;
+import com.biit.metaviewer.types.BooleanType;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,20 +23,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
-public class CadtScoreController extends CadtController {
+public class CadtValueController extends CadtController {
 
     private static final String PIVOTVIEWER_LINK = "/cadt";
-    private static final String PIVOTVIEWER_FILE = "cadt-score.cxml";
-    private static final String METAVIEWER_FILE = "cadt-score.json";
+    private static final String PIVOTVIEWER_FILE = "cadt.cxml";
+    private static final String METAVIEWER_FILE = "cadt.json";
 
-    private static final String FORM_SCORE_VARIABLE = "Score";
 
     @Value("${metaviewer.samples}")
     private String outputFolder;
 
-    public CadtScoreController(CadtProvider cadtProvider) {
+    public CadtValueController(CadtProvider cadtProvider) {
         super(cadtProvider);
     }
 
@@ -52,18 +53,33 @@ public class CadtScoreController extends CadtController {
 
     @Override
     protected void populateFacets(List<Facet<?>> facets, DroolsSubmittedForm droolsSubmittedForm, Map<String, Object> formVariables) {
-        facets.addAll(createCadtScoreFacets(formVariables, droolsSubmittedForm.getSubmittedAt()));
+        facets.addAll(createCadtValueFacets(droolsSubmittedForm.getChildrenRecursive(DroolsSubmittedQuestion.class), droolsSubmittedForm.getSubmittedAt()));
     }
 
 
-    private List<Facet<?>> createCadtScoreFacets(Map<String, Object> formVariables, LocalDateTime submittedTime) {
+    private List<Facet<?>> createCadtValueFacets(List<DroolsSubmittedQuestion> questions, LocalDateTime submittedTime) {
         //Score by archetypes
         final List<Facet<?>> facets = new ArrayList<>();
 
-        for (CadtVariables variable : CadtVariables.values()) {
-            final Double value = (Double) formVariables.get(variable.getVariable());
-            if (value != null) {
-                facets.add(new Facet<>(variable.getVariable(), new NumberType(value)));
+
+        for (DroolsSubmittedQuestion question : questions) {
+            final List<CadtArchetypes> selectedArchetypes = new ArrayList<>();
+            final List<CadtCompetences> selectedCompetences = new ArrayList<>();
+            //Adding archetypes.
+            if (Objects.equals(question.getName(), CadtQuestion.QUESTION1.getTag())
+                    || Objects.equals(question.getName(), CadtQuestion.QUESTION3.getTag())
+                    || Objects.equals(question.getName(), CadtQuestion.QUESTION4.getTag())
+                    || Objects.equals(question.getName(), CadtQuestion.QUESTION6.getTag())) {
+                facets.add(new Facet<>(question.getAnswers().iterator().next(), new BooleanType(true)));
+                selectedArchetypes.add(CadtArchetypes.fromAnswer(question.getAnswers().iterator().next()));
+            }
+
+            //Adding competences
+            if (Objects.equals(question.getName(), CadtQuestion.COMPETENCES.getTag())) {
+                for (String answer : question.getAnswers()) {
+                    facets.add(new Facet<>(answer, new BooleanType(true)));
+                    selectedCompetences.add(CadtCompetences.fromAnswer(answer));
+                }
             }
         }
         return facets;

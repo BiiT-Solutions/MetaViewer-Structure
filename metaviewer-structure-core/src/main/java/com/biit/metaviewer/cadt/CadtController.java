@@ -1,42 +1,26 @@
 package com.biit.metaviewer.cadt;
 
 import com.biit.drools.form.DroolsSubmittedForm;
-import com.biit.drools.form.DroolsSubmittedQuestion;
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.Facet;
 import com.biit.metaviewer.FacetCategory;
 import com.biit.metaviewer.Item;
-import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.exceptions.InvalidFormException;
-import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.biit.metaviewer.provider.CadtProvider;
-import com.biit.metaviewer.types.BooleanType;
 import com.biit.metaviewer.types.DateTimeType;
 import com.biit.metaviewer.types.NumberType;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Controller;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@Controller
-public class CadtController {
-    private static final String FORM_NAME = "CADT_Score";
+public abstract class CadtController {
+
+    protected static final String FORM_NAME = "CADT_Score";
     private static final String PIVOTVIEWER_IMAGE_FILE = "./five_colors/five_colors.dzc";
-    private static final String PIVOTVIEWER_LINK = "/cadt";
-    private static final String PIVOTVIEWER_FILE = "cadt.cxml";
-    private static final String METAVIEWER_FILE = "cadt.json";
+
     private static final String CREATED_AT_FACET = "submittedAt";
 
     private static final String FORM_SCORE_VARIABLE = "Score";
@@ -54,24 +38,13 @@ public class CadtController {
 
     private final CadtProvider cadtProvider;
 
-    @Value("${metaviewer.samples}")
-    private String outputFolder;
-
     public CadtController(CadtProvider cadtProvider) {
         this.cadtProvider = cadtProvider;
-    }
-
-
-    @PostConstruct
-    public void onStartup() {
-        //Update data when started.
-        populateSamplesFolder();
     }
 
     public Collection createCollection() {
         return createCollection(cadtProvider.getAll());
     }
-
 
     public Collection createCollection(List<DroolsSubmittedForm> droolsSubmittedForms) {
         final Collection collection = new Collection(FORM_NAME, PIVOTVIEWER_IMAGE_FILE);
@@ -91,8 +64,7 @@ public class CadtController {
         return facetCategories;
     }
 
-
-    private Item generateItem(DroolsSubmittedForm droolsSubmittedForm) {
+    protected Item generateItem(DroolsSubmittedForm droolsSubmittedForm) {
         if (droolsSubmittedForm == null) {
             throw new InvalidFormException("DroolsSubmittedForm is null.");
         }
@@ -104,15 +76,18 @@ public class CadtController {
             throw new InvalidFormException("Form has not variables.");
         }
 
-        final List<Facet<?>> facets = new ArrayList<>();
-        facets.addAll(basicData(droolsSubmittedForm.getSubmittedAt()));
-        facets.addAll(createCadtValueFacets(droolsSubmittedForm.getChildrenRecursive(DroolsSubmittedQuestion.class), droolsSubmittedForm.getSubmittedAt()));
-        final Item item = new Item(getColor((double) formVariables.get(FORM_SCORE_VARIABLE)), PIVOTVIEWER_LINK, droolsSubmittedForm.getSubmittedBy());
+        final List<Facet<?>> facets = new ArrayList<>(basicData(droolsSubmittedForm.getSubmittedAt()));
+        populateFacets(facets, droolsSubmittedForm, formVariables);
+        final Item item = new Item(getColor((double) formVariables.get(FORM_SCORE_VARIABLE)), getPivotViewerLink(), droolsSubmittedForm.getSubmittedBy());
         item.getFacets().addAll(facets);
         return item;
     }
 
-    private List<Facet<?>> basicData(LocalDateTime submittedTime) {
+    protected abstract String getPivotViewerLink();
+
+    protected abstract void populateFacets(List<Facet<?>> facets, DroolsSubmittedForm droolsSubmittedForm, Map<String, Object> formVariables);
+
+    protected List<Facet<?>> basicData(LocalDateTime submittedTime) {
         final List<Facet<?>> facets = new ArrayList<>();
         if (submittedTime != null) {
             facets.add(new Facet<>(CREATED_AT_FACET, new DateTimeType(submittedTime)));
@@ -120,39 +95,7 @@ public class CadtController {
         return facets;
     }
 
-
-    private List<Facet<?>> createCadtValueFacets(List<DroolsSubmittedQuestion> questions, LocalDateTime submittedTime) {
-        //Score by archetypes
-        final List<Facet<?>> facets = new ArrayList<>();
-
-
-        for (DroolsSubmittedQuestion question : questions) {
-            final List<CadtArchetypes> selectedArchetypes = new ArrayList<>();
-            final List<CadtCompetences> selectedCompetences = new ArrayList<>();
-            //Adding archetypes.
-            if (Objects.equals(question.getName(), CadtQuestion.QUESTION1.getTag())
-                    || Objects.equals(question.getName(), CadtQuestion.QUESTION3.getTag())
-                    || Objects.equals(question.getName(), CadtQuestion.QUESTION4.getTag())
-                    || Objects.equals(question.getName(), CadtQuestion.QUESTION6.getTag())) {
-                facets.add(new Facet<>(question.getAnswers().iterator().next(), new BooleanType(true)));
-                selectedArchetypes.add(CadtArchetypes.fromAnswer(question.getAnswers().iterator().next()));
-            }
-
-            //Adding competences
-            if (Objects.equals(question.getName(), CadtQuestion.COMPETENCES.getTag())) {
-                for (String answer : question.getAnswers()) {
-                    facets.add(new Facet<>(answer, new BooleanType(true)));
-                    selectedCompetences.add(CadtCompetences.fromAnswer(answer));
-                }
-            }
-        }
-
-
-        return facets;
-    }
-
-
-    private String getColor(double score) {
+    protected String getColor(double score) {
         if (score < RED_COLOR_LIMIT) {
             return RED_COLOR_TAG;
         }
@@ -166,24 +109,5 @@ public class CadtController {
             return LIGHT_GREEN_COLOR_TAG;
         }
         return DARK_GREEN_COLOR_TAG;
-    }
-
-
-    @Scheduled(cron = "@midnight")
-    public void populateSamplesFolder() {
-        try {
-            //Add new one
-            final Collection collection = createCollection();
-            try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
-                    + File.separator + PIVOTVIEWER_FILE, false), StandardCharsets.UTF_8)))) {
-                out.println(ObjectMapperFactory.generateXml(collection));
-            }
-            try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
-                    + File.separator + METAVIEWER_FILE, false), StandardCharsets.UTF_8)))) {
-                out.println(ObjectMapperFactory.generateJson(collection));
-            }
-        } catch (Exception e) {
-            MetaViewerLogger.errorMessage(this.getClass(), e);
-        }
     }
 }
