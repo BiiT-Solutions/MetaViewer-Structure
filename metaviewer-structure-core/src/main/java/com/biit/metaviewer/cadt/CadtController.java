@@ -49,7 +49,11 @@ public abstract class CadtController {
         final Collection collection = new Collection(FORM_NAME, PIVOTVIEWER_IMAGE_FILE);
         collection.getFacetCategories().addAll(createCadtFacetsCategories());
         for (DroolsSubmittedForm droolsSubmittedForm : droolsSubmittedForms) {
-            collection.getItems().getItems().add(generateItem(droolsSubmittedForm));
+            final Item item = generateItem(droolsSubmittedForm);
+            //If it has data, include it. All has submittedAt facet.
+            if (item.getFacets().size() > 1) {
+                collection.getItems().getItems().add(item);
+            }
         }
         return collection;
     }
