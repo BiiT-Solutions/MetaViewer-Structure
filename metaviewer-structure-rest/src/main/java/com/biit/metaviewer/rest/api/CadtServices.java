@@ -32,7 +32,7 @@ public class CadtServices {
 
     @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
     @Operation(summary = "Gets CADT score result as json.", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping(value = "/score/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/scores/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection createScoreJson(Authentication authentication, HttpServletResponse response) {
         return cadtScoreController.createCollection();
     }
@@ -40,14 +40,14 @@ public class CadtServices {
 
     @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
     @Operation(summary = "Gets CADT score result as xml.", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping(value = "/score/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
+    @GetMapping(value = "/scores/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public String createScoreXml(Authentication authentication, HttpServletResponse response) throws JsonProcessingException {
         return ObjectMapperFactory.generateXml(cadtScoreController.createCollection());
     }
 
 
     @Operation(summary = "Regenerates CADT score result as xml and json and stores it to a file.", security = @SecurityRequirement(name = "bearerAuth"))
-    @PutMapping(value = "/score/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
+    @PutMapping(value = "/scores/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public void refreshScore(Authentication authentication, HttpServletResponse response) {
         cadtScoreController.populateSamplesFolder();
     }
