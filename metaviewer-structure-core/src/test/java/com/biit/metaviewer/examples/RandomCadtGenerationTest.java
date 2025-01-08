@@ -105,8 +105,9 @@ public class RandomCadtGenerationTest {
             randomDate = LocalDateTime.ofEpochSecond(randomTime, 0, ZoneOffset.UTC);
         } while (!randomDate.query(new DateQuery()));
         if (randomDate.isAfter(LocalDateTime.now())) {
-            randomDate = randomDate.withYear(LocalDateTime.now().getYear());
-            randomDate = randomDate.withMonth(LocalDateTime.now().getMonthValue() - 1);
+            final LocalDateTime pastMont = LocalDateTime.now().minusMonths(1);
+            randomDate = randomDate.withYear(pastMont.getYear());
+            randomDate = randomDate.withMonth(pastMont.getMonthValue());
         }
         return randomDate;
     }
