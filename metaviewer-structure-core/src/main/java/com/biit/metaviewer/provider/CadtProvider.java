@@ -22,6 +22,7 @@ public class CadtProvider {
     private static final String GROUP = "processedForm";
     private static final String ELEMENT_NAME = "CADT_Score";
     private static final String APPLICATION = "BaseFormDroolsEngine";
+    private static final String LATEST_BY_USER = "true";
 
     private final FactClient factClient;
 
@@ -35,6 +36,7 @@ public class CadtProvider {
         filter.put(SearchParameters.GROUP, GROUP);
         filter.put(SearchParameters.ELEMENT_NAME, ELEMENT_NAME);
         filter.put(SearchParameters.APPLICATION, APPLICATION);
+        filter.put(SearchParameters.LATEST_BY_USER, LATEST_BY_USER);
         return get(filter);
     }
 
