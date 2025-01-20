@@ -22,7 +22,7 @@ public class CadtProvider {
     private static final String GROUP = "processedForm";
     private static final String ELEMENT_NAME = "CADT_Score";
     private static final String APPLICATION = "BaseFormDroolsEngine";
-    private static final String LATEST_BY_USER = "true";
+    private static final Boolean LATEST_BY_USER = true;
 
     private final FactClient factClient;
 
