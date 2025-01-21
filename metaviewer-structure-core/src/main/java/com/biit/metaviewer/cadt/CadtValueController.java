@@ -10,6 +10,7 @@ import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.biit.metaviewer.provider.CadtProvider;
 import com.biit.metaviewer.types.BooleanType;
 import com.biit.metaviewer.types.DateTimeType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -37,8 +39,11 @@ public class CadtValueController extends CadtController {
     @Value("${metaviewer.samples}")
     private String outputFolder;
 
-    public CadtValueController(CadtProvider cadtProvider) {
+    private final ObjectMapper objectMapper;
+
+    public CadtValueController(CadtProvider cadtProvider, ObjectMapper objectMapper) {
         super(cadtProvider);
+        this.objectMapper = objectMapper;
     }
 
 
@@ -122,6 +127,15 @@ public class CadtValueController extends CadtController {
         }
 
         return facets;
+    }
+
+    public Collection readSamplesFolder() {
+        try {
+            return objectMapper.readValue(new File(outputFolder + File.separator + METAVIEWER_FILE), Collection.class);
+        } catch (IOException e) {
+            MetaViewerLogger.errorMessage(this.getClass(), e);
+            return createCollection();
+        }
     }
 
 
