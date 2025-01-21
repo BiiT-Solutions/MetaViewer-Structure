@@ -57,9 +57,8 @@ public class BasicLogging extends AbstractLogging {
     @Around(value = "selectAll() || isAnnotated()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         final StopWatch stopWatch = new StopWatch();
-        Object returnValue = null;
         stopWatch.start();
-        returnValue = joinPoint.proceed();
+        final Object returnValue = joinPoint.proceed();
         stopWatch.stop();
         log(stopWatch.getTotalTimeMillis(), joinPoint);
         return returnValue;

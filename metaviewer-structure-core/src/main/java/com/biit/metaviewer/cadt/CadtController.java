@@ -6,8 +6,10 @@ import com.biit.metaviewer.Facet;
 import com.biit.metaviewer.FacetCategory;
 import com.biit.metaviewer.Item;
 import com.biit.metaviewer.exceptions.InvalidFormException;
+import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.biit.metaviewer.provider.CadtProvider;
 import com.biit.metaviewer.types.DateTimeType;
+import org.springframework.util.StopWatch;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,7 +44,14 @@ public abstract class CadtController {
     }
 
     public Collection createCollection() {
-        return createCollection(cadtProvider.getAll());
+        final StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        try {
+            return createCollection(cadtProvider.getAll());
+        } finally {
+            stopWatch.stop();
+            MetaViewerLogger.info(this.getClass(), "Collection created in '" + stopWatch.getTotalTimeMillis() + "' ms");
+        }
     }
 
     public Collection createCollection(List<DroolsSubmittedForm> droolsSubmittedForms) {
