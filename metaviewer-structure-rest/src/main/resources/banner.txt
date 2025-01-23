@@ -7,7 +7,7 @@ ${AnsiColor.BLUE}${AnsiStyle.BOLD}
 
 
 ${AnsiColor.BRIGHT_WHITE}${AnsiStyle.BOLD}
-::  MetaViewer Structure  ::  (v${application.version})
+::  MetaViewer Structure   ::  (v${application.version})
 ::  Java                   ::  (v${java.version})
 ::  Spring Boot            ::  (v${spring-boot.version})
 ${AnsiStyle.NORMAL}

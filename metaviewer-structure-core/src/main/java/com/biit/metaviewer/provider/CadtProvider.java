@@ -9,6 +9,8 @@ import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,13 +32,16 @@ public class CadtProvider {
         this.factClient = factClient;
     }
 
-    public List<DroolsSubmittedForm> getAll() {
+    public List<DroolsSubmittedForm> getAll(LocalDateTime from) {
         final Map<SearchParameters, Object> filter = new HashMap<>();
         filter.put(SearchParameters.FACT_TYPE, FACT_TYPE);
         filter.put(SearchParameters.GROUP, GROUP);
         filter.put(SearchParameters.ELEMENT_NAME, ELEMENT_NAME);
         filter.put(SearchParameters.APPLICATION, APPLICATION);
         filter.put(SearchParameters.LATEST_BY_USER, LATEST_BY_USER);
+        if (from != null) {
+            filter.put(SearchParameters.FROM, from.format(DateTimeFormatter.ISO_DATE_TIME));
+        }
         return get(filter);
     }
 

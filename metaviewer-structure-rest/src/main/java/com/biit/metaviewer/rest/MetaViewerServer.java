@@ -28,9 +28,9 @@ import org.springframework.web.servlet.DispatcherServlet;
         @PropertySource(value = "file:${EXTERNAL_CONFIG_FILE}", ignoreResourceNotFound = true)
 })
 @ComponentScan(basePackages = {"com.biit.metaviewer", "com.biit.server.security", "com.biit.server", "com.biit.messagebird.client",
-        "com.biit.usermanager.client", "com.biit.factmanager.client"},
+        "com.biit.usermanager.client", "com.biit.factmanager.client", "com.biit.kafka"},
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {UserGuardDatabaseConfigurator.class})})
-@ConfigurationPropertiesScan({"com.biit.metaviewer.rest"})
+@ConfigurationPropertiesScan({"com.biit.metaviewer.rest", "com.biit.kafka.config"})
 public class MetaViewerServer {
     private static final int POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 100;

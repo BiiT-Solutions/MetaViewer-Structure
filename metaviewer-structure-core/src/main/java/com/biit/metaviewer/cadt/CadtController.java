@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public abstract class CadtController {
 
-    protected static final String FORM_NAME = "CADT_Score";
+    public static final String FORM_NAME = "CADT_Score";
     private static final String PIVOTVIEWER_IMAGE_FILE = "./five_colors/five_colors.dzc";
 
     protected static final String CREATED_AT_FACET = "submittedAt";
@@ -39,23 +39,48 @@ public abstract class CadtController {
 
     private final CadtProvider cadtProvider;
 
+
     public CadtController(CadtProvider cadtProvider) {
         this.cadtProvider = cadtProvider;
+    }
+
+
+    public abstract Collection readSamplesFolder();
+
+
+    public synchronized void newFormReceived(DroolsSubmittedForm droolsSubmittedForm) {
+        final StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        try {
+            final Collection storedCollection = readSamplesFolder();
+            if (storedCollection != null) {
+                MetaViewerLogger.debug(this.getClass(), "Updating existing collection.");
+                updateCollection(storedCollection, droolsSubmittedForm);
+            } else {
+                MetaViewerLogger.debug(this.getClass(), "Creating a new collection.");
+                createCollection(cadtProvider.getAll(null));
+            }
+        } finally {
+            stopWatch.stop();
+            MetaViewerLogger.info(this.getClass(), "Collection updated in '" + stopWatch.getTotalTimeMillis() + "' ms");
+        }
     }
 
     public Collection createCollection() {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         try {
-            return createCollection(cadtProvider.getAll());
+            return createCollection(cadtProvider.getAll(null));
         } finally {
             stopWatch.stop();
             MetaViewerLogger.info(this.getClass(), "Collection created in '" + stopWatch.getTotalTimeMillis() + "' ms");
         }
     }
 
+
     public Collection createCollection(List<DroolsSubmittedForm> droolsSubmittedForms) {
         final Collection collection = new Collection(FORM_NAME, PIVOTVIEWER_IMAGE_FILE);
+        MetaViewerLogger.debug(this.getClass(), "Creating a new collection with '{}' elements.", droolsSubmittedForms.size());
         collection.getFacetCategories().addAll(createCadtFacetsCategories());
         for (DroolsSubmittedForm droolsSubmittedForm : droolsSubmittedForms) {
             final Item item = generateItem(droolsSubmittedForm);
@@ -64,7 +89,21 @@ public abstract class CadtController {
                 collection.getItems().getItems().add(item);
             }
         }
+        collection.setCreatedAt(LocalDateTime.now());
         return collection;
+    }
+
+
+    public void updateCollection(Collection collection, DroolsSubmittedForm droolsSubmittedForm) {
+        final Item item = generateItem(droolsSubmittedForm);
+        //If it has data, include it. All has submittedAt facet.
+        if (item.getFacets().size() > 1) {
+            MetaViewerLogger.info(this.getClass(), "Adding one new item to collection.");
+            collection.getItems().getItems().add(item);
+        } else {
+            MetaViewerLogger.debug(this.getClass(), "No new data generated.");
+        }
+        collection.setCreatedAt(LocalDateTime.now());
     }
 
     protected abstract List<FacetCategory> createCadtFacetsCategories();

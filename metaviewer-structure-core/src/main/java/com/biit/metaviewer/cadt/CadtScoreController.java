@@ -14,7 +14,6 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StopWatch;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -85,12 +84,13 @@ public class CadtScoreController extends CadtController {
         return facets;
     }
 
+
     public Collection readSamplesFolder() {
         try {
             return objectMapper.readValue(new File(outputFolder + File.separator + METAVIEWER_FILE), Collection.class);
         } catch (IOException e) {
             MetaViewerLogger.errorMessage(this.getClass(), e);
-            return createCollection();
+            return null;
         }
     }
 

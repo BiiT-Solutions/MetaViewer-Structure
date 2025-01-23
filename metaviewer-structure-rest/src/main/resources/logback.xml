@@ -38,6 +38,14 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="DAILY"/>
     </logger>
+    <logger name="com.biit.infographic.logger.EventsLogger" additivity="false" level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="DAILY"/>
+    </logger>
+    <logger name="com.biit.kafka.logger.KafkaLogger" additivity="false" level="INFO">
+        <appender-ref ref="DAILY"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
     <logger name="com.biit.database.encryption.logger.EncryptorLogger" additivity="false" level="ERROR">
         <appender-ref ref="DAILY"/>
         <appender-ref ref="CONSOLE"/>
@@ -59,6 +67,10 @@
     <logger name="com.biit.logger.BiitCommonLogger" additivity="false" level="ERROR">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="DAILY"/>
+    </logger>
+    <logger name="com.biit.server.logger.EmailServiceLogger" additivity="false" level="DEBUG">
+        <appender-ref ref="DAILY"/>
+        <appender-ref ref="CONSOLE"/>
     </logger>
 
 

@@ -134,7 +134,7 @@ public class CadtValueController extends CadtController {
             return objectMapper.readValue(new File(outputFolder + File.separator + METAVIEWER_FILE), Collection.class);
         } catch (IOException e) {
             MetaViewerLogger.errorMessage(this.getClass(), e);
-            return createCollection();
+            return null;
         }
     }
 
