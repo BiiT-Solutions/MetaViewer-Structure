@@ -11,12 +11,21 @@ public class NumberType implements Type {
     public static final String PIVOT_VIEWER_DEFINITION = "Number";
 
     @JacksonXmlProperty(isAttribute = true, localName = "Value")
-    private final Double value;
+    private Double value;
+
+    public NumberType() {
+
+    }
 
     public NumberType(Double value) {
         this.value = value;
     }
 
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    @Override
     public String getValue() {
         return String.valueOf(value);
     }

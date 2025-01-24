@@ -16,20 +16,23 @@ import java.util.UUID;
 public class Item {
 
     @JacksonXmlProperty(isAttribute = true, localName = "Id")
-    private final UUID id;
+    private UUID id;
 
     @JacksonXmlProperty(isAttribute = true, localName = "Img")
-    private final String img;
+    private String img;
 
     @JacksonXmlProperty(isAttribute = true, localName = "Href")
-    private final String href;
+    private String href;
 
     @JacksonXmlProperty(isAttribute = true, localName = "Name")
-    private final String name;
+    private String name;
 
     @JacksonXmlElementWrapper(localName = "Facets")
     @JacksonXmlProperty(localName = "Facet")
-    private final List<Facet<?>> facets;
+    private List<Facet<?>> facets;
+
+    public Item() {
+    }
 
     public Item(String img, String href, String name) {
         this.id = UUID.randomUUID();
@@ -37,6 +40,26 @@ public class Item {
         this.href = href;
         this.name = name;
         facets = new ArrayList<>();
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFacets(List<Facet<?>> facets) {
+        this.facets = facets;
     }
 
     public UUID getId() {

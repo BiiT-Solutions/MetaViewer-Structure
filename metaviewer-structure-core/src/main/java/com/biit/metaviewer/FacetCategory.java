@@ -11,10 +11,13 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 public class FacetCategory {
 
     @JacksonXmlProperty(isAttribute = true, localName = "Name")
-    private final String name;
+    private String name;
 
     @JacksonXmlProperty(isAttribute = true, localName = "Type")
-    private final String type;
+    private String type;
+
+    public FacetCategory() {
+    }
 
     public FacetCategory(String name, String type) {
         this.name = name;
@@ -27,5 +30,13 @@ public class FacetCategory {
 
     public String getType() {
         return type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

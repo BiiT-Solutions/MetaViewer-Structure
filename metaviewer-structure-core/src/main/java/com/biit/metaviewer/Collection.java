@@ -27,25 +27,40 @@ public class Collection {
     private final String schemaVersion = "1.0";
 
     @JacksonXmlProperty(isAttribute = true, localName = "Name")
-    private final String name;
+    private String name;
 
     @JacksonXmlElementWrapper(localName = "FacetCategories")
     @JacksonXmlProperty(localName = "FacetCategory")
-    private final List<FacetCategory> facetCategories;
+    private List<FacetCategory> facetCategories;
 
     @JacksonXmlProperty(localName = "Items")
-    private final Items items;
+    private Items items;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss.SSS")
     private LocalDateTime createdAt;
 
+    public Collection() {
+    }
+
     public Collection(String name, String imageBase) {
         this.name = name;
         this.items = new Items(imageBase);
         this.facetCategories = new ArrayList<>();
         setCreatedAt(LocalDateTime.now());
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFacetCategories(List<FacetCategory> facetCategories) {
+        this.facetCategories = facetCategories;
+    }
+
+    public void setItems(Items items) {
+        this.items = items;
     }
 
     public String getXmlns() {

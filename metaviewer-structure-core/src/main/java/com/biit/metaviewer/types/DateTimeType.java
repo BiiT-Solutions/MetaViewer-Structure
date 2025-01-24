@@ -17,9 +17,17 @@ public class DateTimeType implements Type {
 
     @JacksonXmlProperty(isAttribute = true, localName = "Value")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = LOCAL_DATE_TIME_PATTERN)
-    private final LocalDateTime value;
+    private LocalDateTime value;
+
+    public DateTimeType() {
+
+    }
 
     public DateTimeType(LocalDateTime value) {
+        this.value = value;
+    }
+
+    public void setValue(LocalDateTime value) {
         this.value = value;
     }
 

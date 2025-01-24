@@ -15,15 +15,26 @@ import java.util.List;
 public class Items {
 
     @JacksonXmlProperty(isAttribute = true, localName = "ImgBase")
-    private final String imageBase;
+    private String imageBase;
 
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "Item")
-    private final List<Item> items;
+    private List<Item> items;
+
+    public Items() {
+    }
 
     public Items(String imageBase) {
         this.imageBase = imageBase;
         this.items = new ArrayList<>();
+    }
+
+    public void setImageBase(String imageBase) {
+        this.imageBase = imageBase;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public String getImageBase() {

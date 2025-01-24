@@ -6,6 +6,7 @@ import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.TestListener;
 import com.biit.metaviewer.cadt.CadtScoreController;
 import com.biit.utils.file.FileReader;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -36,6 +37,9 @@ public class CadtScoreTest extends AbstractTestNGSpringContextTests {
     private CadtScoreController cadtController;
 
     private static final String DROOLS_FORM_FILE_PATH = "drools/CADT_Score_2.json";
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     protected boolean deleteDirectory(File directoryToBeDeleted) {
         File[] allContents = directoryToBeDeleted.listFiles();
@@ -81,6 +85,14 @@ public class CadtScoreTest extends AbstractTestNGSpringContextTests {
                 + File.separator + "cadt-score.json")), true)) {
             out.println(ObjectMapperFactory.generateJson(collection));
         }
+    }
+
+    @Test
+    public void jsonSerialization() throws IOException {
+        final Collection collection = cadtController.createCollection();
+        String jsonCode = ObjectMapperFactory.generateJson(collection);
+        final Collection importedCollection = objectMapper.readValue(jsonCode, Collection.class);
+        Assert.assertEquals(collection.getItems().getItems().size(), importedCollection.getItems().getItems().size());
     }
 
     @AfterClass

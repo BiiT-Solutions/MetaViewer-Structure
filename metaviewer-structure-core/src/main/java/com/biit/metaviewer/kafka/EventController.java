@@ -65,7 +65,7 @@ public class EventController {
                     ? event.getCustomProperties().get(EventCustomProperties.ISSUER.getTag())
                     : event.getCreatedBy();
 
-            EventsLogger.debug(this.getClass(), "Received new drools form from '{}'", createdBy);
+            EventsLogger.info(this.getClass(), "Received new drools form from '{}'", createdBy);
 
             cadtValueController.newFormReceived(droolsForm);
             cadtScoreController.newFormReceived(droolsForm);

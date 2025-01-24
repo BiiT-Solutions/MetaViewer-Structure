@@ -11,13 +11,21 @@ public class StringType implements Type {
     public static final String PIVOT_VIEWER_DEFINITION = "String";
 
     @JacksonXmlProperty(isAttribute = true, localName = "Value")
-    private final String value;
+    private String value;
 
+    public StringType() {
+
+    }
 
     public StringType(String value) {
         this.value = value;
     }
 
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
     public String getValue() {
         return value;
     }

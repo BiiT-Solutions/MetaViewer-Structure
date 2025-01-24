@@ -11,12 +11,21 @@ public class BooleanType implements Type {
     public static final String PIVOT_VIEWER_DEFINITION = "Boolean";
 
     @JacksonXmlProperty(isAttribute = true, localName = "Value")
-    private final Boolean value;
+    private Boolean value;
+
+    public BooleanType() {
+
+    }
 
     public BooleanType(Boolean value) {
         this.value = value;
     }
 
+    public void setValue(Boolean value) {
+        this.value = value;
+    }
+
+    @Override
     public String getValue() {
         return String.valueOf(value);
     }
