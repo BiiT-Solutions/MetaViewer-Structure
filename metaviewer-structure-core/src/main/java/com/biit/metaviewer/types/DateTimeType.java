@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @JsonPropertyOrder(alphabetic = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -42,5 +43,19 @@ public class DateTimeType implements Type {
     @Override
     public String getMetaViewerDefinition() {
         return PIVOT_VIEWER_DEFINITION;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof DateTimeType that)) {
+            return false;
+        }
+
+        return Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
     }
 }

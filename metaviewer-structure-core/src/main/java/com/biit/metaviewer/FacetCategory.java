@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JsonPropertyOrder(alphabetic = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FacetCategory {
+    private static final int HASH_KEY = 37;
 
     @JacksonXmlProperty(isAttribute = true, localName = "Name")
     private String name;
@@ -38,5 +39,21 @@ public class FacetCategory {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof FacetCategory that)) {
+            return false;
+        }
+
+        return name.equals(that.name) && type.equals(that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = HASH_KEY * result + type.hashCode();
+        return result;
     }
 }

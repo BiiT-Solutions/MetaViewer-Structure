@@ -14,6 +14,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JsonSerialize(using = FacetSerializer.class)
 @JsonDeserialize(using = FacetDeserializer.class)
 public class Facet<E extends Type> {
+    private static final int HASH_KEY = 31;
 
     @JacksonXmlProperty(isAttribute = true, localName = "Name")
     private String name;
@@ -43,5 +44,20 @@ public class Facet<E extends Type> {
 
     public E getType() {
         return type;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Facet<?> facet)) {
+            return false;
+        }
+        return name.equals(facet.name) && type.equals(facet.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = HASH_KEY * result + type.hashCode();
+        return result;
     }
 }

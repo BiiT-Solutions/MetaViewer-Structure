@@ -19,6 +19,7 @@ import java.util.List;
 @JsonPropertyOrder(alphabetic = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Collection {
+    private static final int HASH_KEY = 31;
 
     @JacksonXmlProperty(isAttribute = true, localName = "xmlns")
     private final String xmlns = "http://schemas.microsoft.com/collection/metadata/2009";
@@ -89,5 +90,21 @@ public class Collection {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Collection that)) {
+            return false;
+        }
+        return name.equals(that.name) && facetCategories.equals(that.facetCategories) && items.equals(that.items);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = HASH_KEY * result + facetCategories.hashCode();
+        result = HASH_KEY * result + items.hashCode();
+        return result;
     }
 }

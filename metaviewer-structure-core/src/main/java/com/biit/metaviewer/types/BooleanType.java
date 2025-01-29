@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import java.util.Objects;
+
 @JsonPropertyOrder(alphabetic = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BooleanType implements Type {
@@ -36,4 +38,17 @@ public class BooleanType implements Type {
         return PIVOT_VIEWER_DEFINITION;
     }
 
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof BooleanType that)) {
+            return false;
+        }
+
+        return Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
+    }
 }

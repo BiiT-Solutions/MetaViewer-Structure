@@ -93,6 +93,7 @@ public class CadtScoreTest extends AbstractTestNGSpringContextTests {
         String jsonCode = ObjectMapperFactory.generateJson(collection);
         final Collection importedCollection = objectMapper.readValue(jsonCode, Collection.class);
         Assert.assertEquals(collection.getItems().getItems().size(), importedCollection.getItems().getItems().size());
+        Assert.assertEquals(collection, importedCollection);
     }
 
     @AfterClass

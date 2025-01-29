@@ -8,12 +8,14 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @JacksonXmlRootElement(localName = "Item")
 @JsonPropertyOrder(alphabetic = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
+    private static final int HASH_KEY = 31;
 
     @JacksonXmlProperty(isAttribute = true, localName = "Id")
     private UUID id;
@@ -80,5 +82,24 @@ public class Item {
 
     public List<Facet<?>> getFacets() {
         return facets;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Item item)) {
+            return false;
+        }
+        return id.equals(item.id) && Objects.equals(img, item.img) && Objects.equals(href, item.href)
+                && name.equals(item.name) && facets.equals(item.facets);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = HASH_KEY * result + Objects.hashCode(img);
+        result = HASH_KEY * result + Objects.hashCode(href);
+        result = HASH_KEY * result + name.hashCode();
+        result = HASH_KEY * result + facets.hashCode();
+        return result;
     }
 }
