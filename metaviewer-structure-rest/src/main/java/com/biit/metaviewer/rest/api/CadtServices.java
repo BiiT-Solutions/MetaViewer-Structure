@@ -3,8 +3,8 @@ package com.biit.metaviewer.rest.api;
 
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.ObjectMapperFactory;
-import com.biit.metaviewer.cadt.CadtValueController;
 import com.biit.metaviewer.cadt.CadtScoreController;
+import com.biit.metaviewer.cadt.CadtValueController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -46,11 +46,13 @@ public class CadtServices {
     }
 
 
+    @PreAuthorize("hasAnyAuthority(@securityService.editorPrivilege, @securityService.adminPrivilege)")
     @Operation(summary = "Regenerates CADT score result as xml and json and stores it to a file.", security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping(value = "/scores/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public void refreshScore(Authentication authentication, HttpServletResponse response) {
         cadtScoreController.populateSamplesFolder();
     }
+
 
     @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
     @Operation(summary = "Gets CADT result as json.", security = @SecurityRequirement(name = "bearerAuth"))
@@ -68,6 +70,7 @@ public class CadtServices {
     }
 
 
+    @PreAuthorize("hasAnyAuthority(@securityService.editorPrivilege, @securityService.adminPrivilege)")
     @Operation(summary = "Regenerates CADT result as and json and stores it to a file.", security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping(value = "/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public void refresh(Authentication authentication, HttpServletResponse response) {
