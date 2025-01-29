@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>metaviewer-structure-logger</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.17-SNAPSHOT</version>
+    <version>0.1.17</version>
     <name>MetaViewer Structure (Logger)</name>
 
 
     <parent>
         <groupId>com.biit</groupId>
         <artifactId>metaviewer-structure</artifactId>
-        <version>0.1.17-SNAPSHOT</version>
+        <version>0.1.17</version>
     </parent>
 
     <properties>
