@@ -98,8 +98,14 @@ public class CadtScoreController extends CadtController {
     @Scheduled(cron = "@midnight")
     public void populateSamplesFolder() {
         try {
-            //Add new one
-            final Collection collection = createCollection();
+            populateSamplesFolder(createCollection());
+        } catch (Exception e) {
+            MetaViewerLogger.errorMessage(this.getClass(), e);
+        }
+    }
+
+    protected void populateSamplesFolder(Collection collection) {
+        try {
             try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
                     + File.separator + PIVOTVIEWER_FILE, false), StandardCharsets.UTF_8)))) {
                 out.println(ObjectMapperFactory.generateXml(collection));

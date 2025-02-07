@@ -52,19 +52,22 @@ public abstract class CadtController {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         try {
-            final Collection storedCollection = readSamplesFolder();
+            Collection storedCollection = readSamplesFolder();
             if (storedCollection != null) {
                 MetaViewerLogger.debug(this.getClass(), "Updating existing collection.");
                 updateCollection(storedCollection, droolsSubmittedForm);
             } else {
                 MetaViewerLogger.debug(this.getClass(), "Creating a new collection.");
-                createCollection(cadtProvider.getAll(null));
+                storedCollection = createCollection(cadtProvider.getAll(null));
             }
+            populateSamplesFolder(storedCollection);
         } finally {
             stopWatch.stop();
             MetaViewerLogger.info(this.getClass(), "Collection updated in '" + stopWatch.getTotalTimeMillis() + "' ms");
         }
     }
+
+    protected abstract void populateSamplesFolder(Collection collection);
 
     public Collection createCollection() {
         final StopWatch stopWatch = new StopWatch();
