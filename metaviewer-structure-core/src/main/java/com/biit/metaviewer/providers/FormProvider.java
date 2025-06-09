@@ -1,4 +1,4 @@
-package com.biit.metaviewer.provider;
+package com.biit.metaviewer.providers;
 
 import com.biit.drools.form.DroolsSubmittedForm;
 import com.biit.factmanager.client.FactClient;
@@ -7,7 +7,6 @@ import com.biit.factmanager.dto.FactDTO;
 import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,26 +16,25 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Service
-public class CadtProvider {
-
+public abstract class FormProvider {
     private static final String FACT_TYPE = "DroolsResultForm";
     private static final String GROUP = "processedForm";
-    private static final String ELEMENT_NAME = "CADT_Score";
     private static final String APPLICATION = "BaseFormDroolsEngine";
     private static final Boolean LATEST_BY_USER = true;
 
     private final FactClient factClient;
 
-    public CadtProvider(FactClient factClient) {
+    protected FormProvider(FactClient factClient) {
         this.factClient = factClient;
     }
+
+    public abstract String getFactElementName();
 
     public List<DroolsSubmittedForm> getAll(LocalDateTime from) {
         final Map<SearchParameters, Object> filter = new HashMap<>();
         filter.put(SearchParameters.FACT_TYPE, FACT_TYPE);
         filter.put(SearchParameters.GROUP, GROUP);
-        filter.put(SearchParameters.ELEMENT_NAME, ELEMENT_NAME);
+        filter.put(SearchParameters.ELEMENT_NAME, getFactElementName());
         filter.put(SearchParameters.APPLICATION, APPLICATION);
         filter.put(SearchParameters.LATEST_BY_USER, LATEST_BY_USER);
         if (from != null) {

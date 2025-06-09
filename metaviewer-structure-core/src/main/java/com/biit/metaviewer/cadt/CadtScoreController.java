@@ -1,27 +1,17 @@
 package com.biit.metaviewer.cadt;
 
 import com.biit.drools.form.DroolsSubmittedForm;
-import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.Facet;
 import com.biit.metaviewer.FacetCategory;
-import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.logger.MetaViewerLogger;
-import com.biit.metaviewer.provider.CadtProvider;
+import com.biit.metaviewer.providers.CadtProvider;
 import com.biit.metaviewer.types.DateTimeType;
 import com.biit.metaviewer.types.NumberType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,20 +23,14 @@ public class CadtScoreController extends CadtController {
     private static final String PIVOTVIEWER_FILE = "cadt-score.cxml";
     private static final String METAVIEWER_FILE = "cadt-score.json";
 
-    @Value("${metaviewer.samples}")
-    private String outputFolder;
-
-    private final ObjectMapper objectMapper;
-
-    public CadtScoreController(CadtProvider cadtProvider, ObjectMapper objectMapper) {
-        super(cadtProvider);
-        this.objectMapper = objectMapper;
+    public CadtScoreController(ObjectMapper objectMapper, CadtProvider cadtProvider) {
+        super(objectMapper, cadtProvider);
     }
 
-    @PostConstruct
-    public void onStartup() {
-        //Update data when started.
-        populateSamplesFolder();
+
+    @Override
+    protected void populateFacets(List<Facet<?>> facets, DroolsSubmittedForm droolsSubmittedForm, Map<String, Object> formVariables) {
+        facets.addAll(createCadtScoreFacets(formVariables));
     }
 
     @Override
@@ -55,13 +39,18 @@ public class CadtScoreController extends CadtController {
     }
 
     @Override
-    protected void populateFacets(List<Facet<?>> facets, DroolsSubmittedForm droolsSubmittedForm, Map<String, Object> formVariables) {
-        facets.addAll(createCadtScoreFacets(formVariables));
+    public String getMetaviewerFileName() {
+        return METAVIEWER_FILE;
+    }
+
+    @Override
+    public String getPivotviewerFileName() {
+        return PIVOTVIEWER_FILE;
     }
 
 
     @Override
-    protected List<FacetCategory> createCadtFacetsCategories() {
+    protected List<FacetCategory> createFacetsCategories() {
         final List<FacetCategory> facetCategories = new ArrayList<>();
         facetCategories.add(new FacetCategory(CREATED_AT_FACET, DateTimeType.PIVOT_VIEWER_DEFINITION));
         for (CadtVariables variable : CadtVariables.values()) {
@@ -85,17 +74,7 @@ public class CadtScoreController extends CadtController {
     }
 
 
-    public Collection readSamplesFolder() {
-        try {
-            return objectMapper.readValue(new File(outputFolder + File.separator + METAVIEWER_FILE), Collection.class);
-        } catch (IOException e) {
-            MetaViewerLogger.errorMessage(this.getClass(), e);
-            return null;
-        }
-    }
-
-
-    @Scheduled(cron = "@midnight")
+    @Scheduled(cron = "0 0 0 * * *")
     public void populateSamplesFolder() {
         try {
             populateSamplesFolder(createCollection());
@@ -104,18 +83,4 @@ public class CadtScoreController extends CadtController {
         }
     }
 
-    protected void populateSamplesFolder(Collection collection) {
-        try {
-            try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
-                    + File.separator + PIVOTVIEWER_FILE, false), StandardCharsets.UTF_8)))) {
-                out.println(ObjectMapperFactory.generateXml(collection));
-            }
-            try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
-                    + File.separator + METAVIEWER_FILE, false), StandardCharsets.UTF_8)))) {
-                out.println(ObjectMapperFactory.generateJson(collection));
-            }
-        } catch (Exception e) {
-            MetaViewerLogger.errorMessage(this.getClass(), e);
-        }
-    }
 }

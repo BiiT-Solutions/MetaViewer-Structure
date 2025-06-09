@@ -21,7 +21,7 @@ import java.util.TimeZone;
 
 @Controller
 @ConditionalOnExpression("${spring.kafka.enabled:false}")
-public class EventController {
+public class NcaEventController {
 
     public static final String ALLOWED_FACT_TYPE = "DroolsResultForm";
 
@@ -30,7 +30,7 @@ public class EventController {
 
 
     @Autowired(required = false)
-    public EventController(EventListener eventListener, CadtScoreController cadtScoreController, CadtValueController cadtValueController) {
+    public NcaEventController(EventListener eventListener, CadtScoreController cadtScoreController, CadtValueController cadtValueController) {
         this.cadtScoreController = cadtScoreController;
         this.cadtValueController = cadtValueController;
 

@@ -1,0 +1,943 @@
+{
+  "class": "com.biit.drools.form.DroolsSubmittedForm",
+  "tag": "NCA",
+  "children": [
+    {
+      "class": "com.biit.drools.form.DroolsSubmittedCategory",
+      "tag": "Culture",
+      "text": "Culture",
+      "children": [
+        {
+          "class": "com.biit.drools.form.DroolsSubmittedGroup",
+          "tag": "CultureImages",
+          "text": "CultureImages",
+          "children": [
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgCulture1",
+              "text": "OrgCulture1",
+              "children": [],
+              "answers": [
+                "5"
+              ]
+            }
+          ],
+          "repeatable": "false",
+          "numberOfIterations": "0"
+        },
+        {
+          "class": "com.biit.drools.form.DroolsSubmittedGroup",
+          "tag": "CultureStatements",
+          "text": "CultureStatements",
+          "children": [
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "RoomForInitiative",
+              "text": "RoomForInitiative",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "ProfAttitude",
+              "text": "ProfAttitude",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "InfoExchange",
+              "text": "InfoExchange",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "CareOthers",
+              "text": "CareOthers",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "TakeAction",
+              "text": "TakeAction",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "PracticalApproach",
+              "text": "PracticalApproach",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Harmony",
+              "text": "Harmony",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "DecisionPower",
+              "text": "DecisionPower",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "ConsFuture",
+              "text": "ConsFuture",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "TaskResp",
+              "text": "TaskResp",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "ProgIdeas",
+              "text": "ProgIdeas",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OtherMeaning",
+              "text": "OtherMeaning",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "ActionDirection",
+              "text": "ActionDirection",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Appreciation",
+              "text": "Appreciation",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "CustomerFocus",
+              "text": "CustomerFocus",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "BusinessFocus",
+              "text": "BusinessFocus",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "TrustEnvironment",
+              "text": "TrustEnvironment",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Accuracy",
+              "text": "Accuracy",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Flexibility",
+              "text": "Flexibility",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "RealisticJudging",
+              "text": "RealisticJudging",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "PerformanceDriven",
+              "text": "PerformanceDriven",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "GoalsDriven",
+              "text": "GoalsDriven",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "CollaboratedGoals",
+              "text": "CollaboratedGoals",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "MultiplePerspectives",
+              "text": "MultiplePerspectives",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "NoInitiatives",
+              "text": "NoInitiatives",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Quirky",
+              "text": "Quirky",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "LittleContact",
+              "text": "LittleContact",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OnYourOwn",
+              "text": "OnYourOwn",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "NoOwnResp",
+              "text": "NoOwnResp",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "ForcedControl",
+              "text": "ForcedControl",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "AdjustedBehaviour",
+              "text": "AdjustedBehaviour",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Manipulation",
+              "text": "Manipulation",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Imitation",
+              "text": "Imitation",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "SituationStuck",
+              "text": "SituationStuck",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "PersonalFreedom",
+              "text": "PersonalFreedom",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Blame",
+              "text": "Blame",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "ActionPunishment",
+              "text": "ActionPunishment",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "NoDecision",
+              "text": "NoDecision",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "SolisticFunctioning",
+              "text": "SolisticFunctioning",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OwnInterest",
+              "text": "OwnInterest",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "LittleTrust",
+              "text": "LittleTrust",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "FearRules",
+              "text": "FearRules",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Disharmony",
+              "text": "Disharmony",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "PoliticGames",
+              "text": "PoliticGames",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "Exaggeration",
+              "text": "Exaggeration",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "RulesRule",
+              "text": "RulesRule",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "LittleCooperation",
+              "text": "LittleCooperation",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "ChaoticSituations",
+              "text": "ChaoticSituations",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            }
+          ],
+          "repeatable": "false",
+          "numberOfIterations": "0"
+        }
+      ]
+    },
+    {
+      "class": "com.biit.drools.form.DroolsSubmittedCategory",
+      "tag": "Nature",
+      "text": "Nature",
+      "children": [
+        {
+          "class": "com.biit.drools.form.DroolsSubmittedGroup",
+          "tag": "NatureImages",
+          "text": "NatureImages",
+          "children": [
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgNature1",
+              "text": "OrgNature1",
+              "children": [],
+              "answers": [
+                "5"
+              ]
+            }
+          ],
+          "repeatable": "false",
+          "numberOfIterations": "0"
+        },
+        {
+          "class": "com.biit.drools.form.DroolsSubmittedGroup",
+          "tag": "NatureStatements",
+          "text": "NatureStatements",
+          "children": [
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "GoalOrientedActions",
+              "text": "GoalOrientedActions",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "HomogeneousOrg",
+              "text": "HomogeneousOrg",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "CommercialOrg",
+              "text": "CommercialOrg",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "InterpersonalStrength",
+              "text": "InterpersonalStrength",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "TrustedOrg",
+              "text": "TrustedOrg",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "AnalyticsOrg",
+              "text": "AnalyticsOrg",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "HarmonicOrg",
+              "text": "HarmonicOrg",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "StrategicPower",
+              "text": "StrategicPower",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "LongTermVision",
+              "text": "LongTermVision",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgNorms",
+              "text": "OrgNorms",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgInnovative",
+              "text": "OrgInnovative",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "MultiOrg",
+              "text": "MultiOrg",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgActive",
+              "text": "OrgActive",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgAppreciation",
+              "text": "OrgAppreciation",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgContactual",
+              "text": "OrgContactual",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgInvolvement",
+              "text": "OrgInvolvement",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgLeadership",
+              "text": "OrgLeadership",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "WorkDetailed",
+              "text": "WorkDetailed",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgFlexibility",
+              "text": "OrgFlexibility",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgDecisive",
+              "text": "OrgDecisive",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "LeadingOrg",
+              "text": "LeadingOrg",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgTasks",
+              "text": "OrgTasks",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "SocialResp",
+              "text": "SocialResp",
+              "children": [],
+              "answers": [
+                "1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgTransparancy",
+              "text": "OrgTransparancy",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgExternal",
+              "text": "OrgExternal",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgSlow",
+              "text": "OrgSlow",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgDivided",
+              "text": "OrgDivided",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgChanges",
+              "text": "OrgChanges",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgUnresp",
+              "text": "OrgUnresp",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgOverSpec",
+              "text": "OrgOverSpec",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgInChange",
+              "text": "OrgInChange",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgCrisisInt",
+              "text": "OrgCrisisInt",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgCredentials",
+              "text": "OrgCredentials",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgUnclearTasks",
+              "text": "OrgUnclearTasks",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgRebels",
+              "text": "OrgRebels",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgChaotic",
+              "text": "OrgChaotic",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgFighting",
+              "text": "OrgFighting",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgDogmatic",
+              "text": "OrgDogmatic",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgSuperficial",
+              "text": "OrgSuperficial",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgNoDestiny",
+              "text": "OrgNoDestiny",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgUnreliable",
+              "text": "OrgUnreliable",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgFear",
+              "text": "OrgFear",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgSolistic",
+              "text": "OrgSolistic",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgPowerPatterns",
+              "text": "OrgPowerPatterns",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgVolatile",
+              "text": "OrgVolatile",
+              "children": [],
+              "answers": [
+                "0"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgRusted",
+              "text": "OrgRusted",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgAntisocial",
+              "text": "OrgAntisocial",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            },
+            {
+              "class": "com.biit.drools.form.DroolsSubmittedQuestion",
+              "tag": "OrgSick",
+              "text": "OrgSick",
+              "children": [],
+              "answers": [
+                "-1"
+              ]
+            }
+          ],
+          "repeatable": "false",
+          "numberOfIterations": "0"
+        }
+      ]
+    }
+  ],
+  "applicationName": "",
+  "submittedBy": "daravonlichtenlade",
+  "submittedAt": "09-06-2025 13:28:50",
+  "version": 2,
+  "formVariables": "{\n  \"/DroolsSubmittedForm[@label='NCA']\" : {\n    \"universeel\" : -2.0,\n    \"maatschappelijk\" : 2.0,\n    \"aanpassingsvermogen\" : 0.0,\n    \"communicatie\" : 0.0,\n    \"analyse\" : 1.0,\n    \"procesinrichting\" : -1.0,\n    \"visie\" : -2.0,\n    \"actiegerichtheid\" : 0.0,\n    \"kracht\" : 1.0,\n    \"verantwoordelijkheid\" : 1.0\n  }\n}"
+}

@@ -4,7 +4,7 @@ import com.biit.drools.form.DroolsSubmittedForm;
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.TestListener;
-import com.biit.metaviewer.cadt.CadtScoreController;
+import com.biit.metaviewer.nca.NcaController;
 import com.biit.utils.file.FileReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +26,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-
 @SpringBootTest
-@Test(groups = "cadtScore")
+@Test(groups = "nca")
 @Listeners(TestListener.class)
-public class CadtScoreTest extends AbstractTestNGSpringContextTests {
+public class NcaTest extends AbstractTestNGSpringContextTests {
     protected static final String OUTPUT_FOLDER = System.getProperty("java.io.tmpdir") + File.separator + "MetaViewer";
-    private static final String DROOLS_FORM_FILE_PATH = "drools/CADT_Score_2.json";
+    private static final String DROOLS_FORM_FILE_PATH = "drools/NCA_1.json";
 
     @Autowired
-    private CadtScoreController cadtController;
+    private NcaController ncaController;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -55,40 +54,39 @@ public class CadtScoreTest extends AbstractTestNGSpringContextTests {
         Files.createDirectories(Paths.get(OUTPUT_FOLDER));
     }
 
-
     @Test
-    public void convertScoresToMetaViewer() throws IOException {
+    public void convertNcaToMetaviewer() throws IOException {
         final List<DroolsSubmittedForm> droolsSubmittedForms = List.of(DroolsSubmittedForm.getFromJson(FileReader
                 .getResource(DROOLS_FORM_FILE_PATH, StandardCharsets.UTF_8)));
 
-        final Collection collection = cadtController.createCollection(droolsSubmittedForms);
+        final Collection collection = ncaController.createCollection(droolsSubmittedForms);
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
-                + File.separator + "cadt-score-single.cxml")), true)) {
+                + File.separator + "nca-single.cxml")), true)) {
             out.println(ObjectMapperFactory.generateXml(collection));
         }
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
-                + File.separator + "cadt-score-single.json")), true)) {
+                + File.separator + "nca-single.json")), true)) {
             out.println(ObjectMapperFactory.generateJson(collection));
         }
     }
 
     @Test
     public void convertFactsToMetaViewer() throws IOException {
-        final Collection collection = cadtController.createCollection();
+        final Collection collection = ncaController.createCollection();
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
-                + File.separator + "cadt-score.cxml")), true)) {
+                + File.separator + "nca-score.cxml")), true)) {
             out.println(ObjectMapperFactory.generateXml(collection));
         }
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
-                + File.separator + "cadt-score.json")), true)) {
+                + File.separator + "nca-score.json")), true)) {
             out.println(ObjectMapperFactory.generateJson(collection));
         }
     }
 
     @Test
     public void jsonSerialization() throws IOException {
-        final Collection collection = cadtController.createCollection();
+        final Collection collection = ncaController.createCollection();
         String jsonCode = ObjectMapperFactory.generateJson(collection);
         final Collection importedCollection = objectMapper.readValue(jsonCode, Collection.class);
         Assert.assertEquals(collection.getItems().getItems().size(), importedCollection.getItems().getItems().size());
@@ -99,4 +97,5 @@ public class CadtScoreTest extends AbstractTestNGSpringContextTests {
     public void removeFolder() {
         Assert.assertTrue(deleteDirectory(new File(OUTPUT_FOLDER)));
     }
+
 }

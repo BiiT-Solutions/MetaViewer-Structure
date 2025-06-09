@@ -1,8 +1,12 @@
 package com.biit.metaviewer.rest;
 
+import com.biit.metaviewer.cadt.CadtScoreController;
+import com.biit.metaviewer.cadt.CadtValueController;
 import com.biit.metaviewer.logger.MetaViewerLogger;
+import com.biit.metaviewer.nca.NcaController;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.servers.Server;
+import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,6 +36,17 @@ public class MetaViewerServer {
     private static final int POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 100;
 
+
+    private final NcaController ncaController;
+    private final CadtScoreController cadtScoreController;
+    private final CadtValueController cadtValueController;
+
+    public MetaViewerServer(NcaController ncaController, CadtScoreController cadtScoreController, CadtValueController cadtValueController) {
+        this.ncaController = ncaController;
+        this.cadtScoreController = cadtScoreController;
+        this.cadtValueController = cadtValueController;
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(MetaViewerServer.class, args);
     }
@@ -60,5 +75,13 @@ public class MetaViewerServer {
     @Bean
     public ApplicationListener<ContextRefreshedEvent> startupLoggingListener() {
         return event -> MetaViewerLogger.info(MetaViewerServer.class, "### Server started ###");
+    }
+
+    @PostConstruct
+    public void onStartup() {
+        //Update data when started.
+        ncaController.populateSamplesFolder();
+        cadtScoreController.populateSamplesFolder();
+        cadtValueController.populateSamplesFolder();
     }
 }
