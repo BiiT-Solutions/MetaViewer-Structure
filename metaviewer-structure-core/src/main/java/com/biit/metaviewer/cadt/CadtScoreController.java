@@ -8,7 +8,6 @@ import com.biit.metaviewer.providers.CadtProvider;
 import com.biit.metaviewer.types.DateTimeType;
 import com.biit.metaviewer.types.NumberType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
