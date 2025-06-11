@@ -56,7 +56,7 @@ public class CadtServices {
 
     @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
     @Operation(summary = "Gets CADT result as json.", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping(value = "/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/values/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection createJson(Authentication authentication, HttpServletResponse response) {
         return cadtValueController.readSamplesFolder();
     }
@@ -64,7 +64,7 @@ public class CadtServices {
 
     @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
     @Operation(summary = "Gets CADT result as xml.", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping(value = "/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
+    @GetMapping(value = "/values/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public String createXml(Authentication authentication, HttpServletResponse response) throws JsonProcessingException {
         return ObjectMapperFactory.generateXml(cadtValueController.readSamplesFolder());
     }
@@ -72,7 +72,7 @@ public class CadtServices {
 
     @PreAuthorize("hasAnyAuthority(@securityService.editorPrivilege, @securityService.adminPrivilege)")
     @Operation(summary = "Regenerates CADT result as and json and stores it to a file.", security = @SecurityRequirement(name = "bearerAuth"))
-    @PutMapping(value = "/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
+    @PutMapping(value = "/values/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public void refresh(Authentication authentication, HttpServletResponse response) {
         cadtValueController.populateSamplesFolder();
     }
