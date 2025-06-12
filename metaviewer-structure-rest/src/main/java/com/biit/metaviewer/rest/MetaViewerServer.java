@@ -6,7 +6,6 @@ import com.biit.metaviewer.controllers.FormController;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.servers.Server;
-import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
