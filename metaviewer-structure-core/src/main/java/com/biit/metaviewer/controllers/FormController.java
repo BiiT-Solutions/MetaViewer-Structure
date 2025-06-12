@@ -274,7 +274,11 @@ public class FormController {
     protected int getRedColorLimit(String formName) {
         final Properties formsProperties = getFormsProperties();
         if (formsProperties != null) {
-            formsProperties.getProperty(getFormProperty(formName) + ".red.limit");
+            try {
+                return Integer.parseInt(formsProperties.getProperty(getFormProperty(formName) + ".red.limit"));
+            } catch (NumberFormatException e) {
+                MetaViewerLogger.errorMessage(this.getClass(), e);
+            }
         }
         return DEFAULT_RED_LIMIT;
     }
@@ -282,7 +286,11 @@ public class FormController {
     protected int getOrangeColorLimit(String formName) {
         final Properties formsProperties = getFormsProperties();
         if (formsProperties != null) {
-            formsProperties.getProperty(getFormProperty(formName) + ".orange.limit");
+            try {
+                return Integer.parseInt(formsProperties.getProperty(getFormProperty(formName) + ".orange.limit"));
+            } catch (NumberFormatException e) {
+                MetaViewerLogger.errorMessage(this.getClass(), e);
+            }
         }
         return DEFAULT_ORANGE_LIMIT;
     }
@@ -290,7 +298,11 @@ public class FormController {
     protected int getYellowColorLimit(String formName) {
         final Properties formsProperties = getFormsProperties();
         if (formsProperties != null) {
-            formsProperties.getProperty(getFormProperty(formName) + ".yellow.limit");
+            try {
+                return Integer.parseInt(formsProperties.getProperty(getFormProperty(formName) + ".yellow.limit"));
+            } catch (NumberFormatException e) {
+                MetaViewerLogger.errorMessage(this.getClass(), e);
+            }
         }
         return DEFAULT_YELLOW_LIMIT;
     }
@@ -298,7 +310,11 @@ public class FormController {
     protected int getLightGreenColorLimit(String formName) {
         final Properties formsProperties = getFormsProperties();
         if (formsProperties != null) {
-            formsProperties.getProperty(getFormProperty(formName) + ".light-green.limit");
+            try {
+                return Integer.parseInt(formsProperties.getProperty(getFormProperty(formName) + ".light-green.limit"));
+            } catch (NumberFormatException e) {
+                MetaViewerLogger.errorMessage(this.getClass(), e);
+            }
         }
         return DEFAULT_LIGHT_GREEN_LIMIT;
     }
