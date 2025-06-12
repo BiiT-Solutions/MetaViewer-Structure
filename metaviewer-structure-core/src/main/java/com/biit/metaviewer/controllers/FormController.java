@@ -227,6 +227,7 @@ public class FormController {
         for (Map.Entry<String, Object> entry : formVariables.entrySet()) {
             totalScore += Double.parseDouble(entry.getValue().toString());
         }
+        MetaViewerLogger.info(this.getClass(), "Total color for '" + formName + "' is '" + totalScore + "'.");
         return getScoreColor(formName, totalScore);
     }
 
@@ -304,17 +305,27 @@ public class FormController {
 
     protected String getScoreColor(String formName, double score) {
         if (score < getRedColorLimit(formName)) {
+            MetaViewerLogger.debug(this.getClass(), "Score is '" + score + "' that is below that '" + getRedColorLimit(formName)
+                    + "'. So color is Red.");
             return RED_COLOR_TAG;
         }
         if (score < getOrangeColorLimit(formName)) {
+            MetaViewerLogger.debug(this.getClass(), "Score is '" + score + "' that is below that '" + getOrangeColorLimit(formName)
+                    + "'. So color is Orange.");
             return ORANGE_COLOR_TAG;
         }
         if (score < getYellowColorLimit(formName)) {
+            MetaViewerLogger.debug(this.getClass(), "Score is '" + score + "' that is below that '" + getYellowColorLimit(formName)
+                    + "'. So color is Yellow.");
             return YELLOW_COLOR_TAG;
         }
         if (score < getLightGreenColorLimit(formName)) {
+            MetaViewerLogger.debug(this.getClass(), "Score is '" + score + "' that is below that '" + getLightGreenColorLimit(formName)
+                    + "'. So color is Light Green.");
             return LIGHT_GREEN_COLOR_TAG;
         }
+        MetaViewerLogger.debug(this.getClass(), "Score is '" + score + "' that is above '" + getLightGreenColorLimit(formName)
+                + "'. So color is Dark Green.");
         return DARK_GREEN_COLOR_TAG;
     }
 }
