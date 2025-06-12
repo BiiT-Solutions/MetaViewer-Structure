@@ -82,17 +82,4 @@ public class MetaViewerServer {
     public ApplicationListener<ContextRefreshedEvent> startupLoggingListener() {
         return event -> MetaViewerLogger.info(MetaViewerServer.class, "### Server started ###");
     }
-
-    @PostConstruct
-    public void onStartup() {
-        //Update data when started.
-        if (formsEnabled != null) {
-            formsEnabled.forEach(formName -> {
-                MetaViewerLogger.debug(this.getClass(), "Populating '" + formName + "' folder");
-                formController.populateSamplesFolder(formName);
-            });
-        }
-        cadtScoreController.populateSamplesFolder();
-        cadtValueController.populateSamplesFolder();
-    }
 }
