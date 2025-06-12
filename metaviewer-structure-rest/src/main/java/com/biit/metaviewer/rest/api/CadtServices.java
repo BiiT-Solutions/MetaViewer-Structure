@@ -3,6 +3,7 @@ package com.biit.metaviewer.rest.api;
 
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.ObjectMapperFactory;
+import com.biit.metaviewer.cadt.CadtController;
 import com.biit.metaviewer.cadt.CadtScoreController;
 import com.biit.metaviewer.cadt.CadtValueController;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,7 +37,7 @@ public class CadtServices {
     @Operation(summary = "Gets CADT score result as json.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/scores/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection createScoreJson(Authentication authentication, HttpServletResponse response) {
-        return cadtScoreController.readSamplesFolder();
+        return cadtScoreController.readSamplesFolder(CadtController.FORM_NAME);
     }
 
 
@@ -44,7 +45,7 @@ public class CadtServices {
     @Operation(summary = "Gets CADT score result as xml.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/scores/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public String createScoreXml(Authentication authentication, HttpServletResponse response) throws JsonProcessingException {
-        return ObjectMapperFactory.generateXml(cadtScoreController.readSamplesFolder());
+        return ObjectMapperFactory.generateXml(cadtScoreController.readSamplesFolder(CadtController.FORM_NAME));
     }
 
 
@@ -53,7 +54,7 @@ public class CadtServices {
     @PutMapping(value = "/scores/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void refreshScore(Authentication authentication, HttpServletResponse response) {
-        new Thread(cadtScoreController::populateSamplesFolder);
+        new Thread(cadtScoreController::populateSamplesFolder).start();
     }
 
 
@@ -61,7 +62,7 @@ public class CadtServices {
     @Operation(summary = "Gets CADT result as json.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/values/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection createJson(Authentication authentication, HttpServletResponse response) {
-        return cadtValueController.readSamplesFolder();
+        return cadtValueController.readSamplesFolder(CadtController.FORM_NAME);
     }
 
 
@@ -69,7 +70,7 @@ public class CadtServices {
     @Operation(summary = "Gets CADT result as xml.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/values/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public String createXml(Authentication authentication, HttpServletResponse response) throws JsonProcessingException {
-        return ObjectMapperFactory.generateXml(cadtValueController.readSamplesFolder());
+        return ObjectMapperFactory.generateXml(cadtValueController.readSamplesFolder(CadtController.FORM_NAME));
     }
 
 

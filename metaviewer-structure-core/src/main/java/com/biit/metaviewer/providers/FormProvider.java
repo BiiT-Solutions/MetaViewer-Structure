@@ -7,16 +7,18 @@ import com.biit.factmanager.dto.FactDTO;
 import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class FormProvider {
+@Service
+public class FormProvider {
     private static final String FACT_TYPE = "DroolsResultForm";
     private static final String GROUP = "processedForm";
     private static final String APPLICATION = "BaseFormDroolsEngine";
@@ -28,13 +30,11 @@ public abstract class FormProvider {
         this.factClient = factClient;
     }
 
-    public abstract String getFactElementName();
-
-    public List<DroolsSubmittedForm> getAll(LocalDateTime from) {
-        final Map<SearchParameters, Object> filter = new HashMap<>();
+    public List<DroolsSubmittedForm> getAll(LocalDateTime from, String formName) {
+        final Map<SearchParameters, Object> filter = new EnumMap<>(SearchParameters.class);
         filter.put(SearchParameters.FACT_TYPE, FACT_TYPE);
         filter.put(SearchParameters.GROUP, GROUP);
-        filter.put(SearchParameters.ELEMENT_NAME, getFactElementName());
+        filter.put(SearchParameters.ELEMENT_NAME, formName);
         filter.put(SearchParameters.APPLICATION, APPLICATION);
         filter.put(SearchParameters.LATEST_BY_USER, LATEST_BY_USER);
         if (from != null) {

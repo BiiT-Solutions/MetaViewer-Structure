@@ -4,7 +4,7 @@ import com.biit.drools.form.DroolsSubmittedForm;
 import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.ObjectMapperFactory;
 import com.biit.metaviewer.TestListener;
-import com.biit.metaviewer.nca.NcaController;
+import com.biit.metaviewer.controllers.FormController;
 import com.biit.utils.file.FileReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,10 @@ import java.util.List;
 public class NcaTest extends AbstractTestNGSpringContextTests {
     protected static final String OUTPUT_FOLDER = System.getProperty("java.io.tmpdir") + File.separator + "MetaViewer";
     private static final String DROOLS_FORM_FILE_PATH = "drools/NCA_1.json";
+    private static final String FORM = "NCA";
 
     @Autowired
-    private NcaController ncaController;
+    private FormController formController;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -59,7 +60,7 @@ public class NcaTest extends AbstractTestNGSpringContextTests {
         final List<DroolsSubmittedForm> droolsSubmittedForms = List.of(DroolsSubmittedForm.getFromJson(FileReader
                 .getResource(DROOLS_FORM_FILE_PATH, StandardCharsets.UTF_8)));
 
-        final Collection collection = ncaController.createCollection(droolsSubmittedForms);
+        final Collection collection = formController.createCollection(droolsSubmittedForms);
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
                 + File.separator + "nca-single.cxml")), true)) {
@@ -73,7 +74,7 @@ public class NcaTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void convertFactsToMetaViewer() throws IOException {
-        final Collection collection = ncaController.createCollection();
+        final Collection collection = formController.createCollection(FORM);
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
                 + File.separator + "nca-score.cxml")), true)) {
             out.println(ObjectMapperFactory.generateXml(collection));
@@ -86,7 +87,7 @@ public class NcaTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void jsonSerialization() throws IOException {
-        final Collection collection = ncaController.createCollection();
+        final Collection collection = formController.createCollection(FORM);
         String jsonCode = ObjectMapperFactory.generateJson(collection);
         final Collection importedCollection = objectMapper.readValue(jsonCode, Collection.class);
         Assert.assertEquals(collection.getItems().getItems().size(), importedCollection.getItems().getItems().size());

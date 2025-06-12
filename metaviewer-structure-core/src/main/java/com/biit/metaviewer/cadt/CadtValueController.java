@@ -5,7 +5,7 @@ import com.biit.drools.form.DroolsSubmittedQuestion;
 import com.biit.metaviewer.Facet;
 import com.biit.metaviewer.FacetCategory;
 import com.biit.metaviewer.logger.MetaViewerLogger;
-import com.biit.metaviewer.providers.CadtProvider;
+import com.biit.metaviewer.providers.FormProvider;
 import com.biit.metaviewer.types.BooleanType;
 import com.biit.metaviewer.types.DateTimeType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,8 +26,8 @@ public class CadtValueController extends CadtController {
     private static final String METAVIEWER_FILE = "cadt.json";
 
 
-    public CadtValueController(ObjectMapper objectMapper, CadtProvider cadtProvider) {
-        super(objectMapper, cadtProvider);
+    public CadtValueController(ObjectMapper objectMapper, FormProvider formProvider) {
+        super(objectMapper, formProvider);
     }
 
 
@@ -39,17 +39,17 @@ public class CadtValueController extends CadtController {
 
 
     @Override
-    protected String getPivotViewerLink() {
+    protected String getPivotViewerLink(String formName) {
         return PIVOTVIEWER_LINK;
     }
 
     @Override
-    public String getMetaviewerFileName() {
+    public String getMetaviewerFileName(String formName) {
         return METAVIEWER_FILE;
     }
 
     @Override
-    public String getPivotviewerFileName() {
+    public String getPivotviewerFileName(String formName) {
         return PIVOTVIEWER_FILE;
     }
 
@@ -61,7 +61,7 @@ public class CadtValueController extends CadtController {
 
 
     @Override
-    protected List<FacetCategory> createFacetsCategories() {
+    protected List<FacetCategory> createFacetsCategories(DroolsSubmittedForm droolsSubmittedForm) {
         final List<FacetCategory> facetCategories = new ArrayList<>();
         facetCategories.add(new FacetCategory(CREATED_AT_FACET, DateTimeType.PIVOT_VIEWER_DEFINITION));
         for (CadtArchetype archetype : CadtArchetype.values()) {
@@ -127,7 +127,7 @@ public class CadtValueController extends CadtController {
     @Scheduled(cron = "0 0 1 * * *")
     public void populateSamplesFolder() {
         try {
-            populateSamplesFolder(createCollection());
+            populateSamplesFolder(CadtController.FORM_NAME);
         } catch (Exception e) {
             MetaViewerLogger.errorMessage(this.getClass(), e);
         }

@@ -6,7 +6,8 @@ import com.biit.kafka.consumers.EventListener;
 import com.biit.kafka.events.Event;
 import com.biit.kafka.events.EventCustomProperties;
 import com.biit.kafka.logger.EventsLogger;
-import com.biit.metaviewer.nca.NcaController;
+import com.biit.metaviewer.cadt.CadtController;
+import com.biit.metaviewer.controllers.FormController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -19,16 +20,16 @@ import java.util.TimeZone;
 
 @Controller
 @ConditionalOnExpression("${spring.kafka.enabled:false}")
-public class NcaEventController {
+public class FormEventController {
 
     public static final String ALLOWED_FACT_TYPE = "DroolsResultForm";
 
-    private final NcaController ncaController;
+    private final FormController formController;
 
 
     @Autowired(required = false)
-    public NcaEventController(EventListener eventListener, NcaController ncaController) {
-        this.ncaController = ncaController;
+    public FormEventController(EventListener eventListener, FormController formController) {
+        this.formController = formController;
 
         //Listen to a topic
         if (eventListener != null) {
@@ -49,8 +50,8 @@ public class NcaEventController {
                     EventsLogger.debug(this.getClass(), "Event is not a form. Ignored.");
                     return;
                 }
-                if (!Objects.equals(event.getTag(), NcaController.FORM_NAME)) {
-                    EventsLogger.debug(this.getClass(), "Event is a different form. Ignored");
+                if (Objects.equals(event.getTag(), CadtController.FORM_NAME)) {
+                    EventsLogger.debug(this.getClass(), "Event is a CADT form. Ignored");
                     return;
                 }
             }
@@ -63,7 +64,7 @@ public class NcaEventController {
 
             EventsLogger.info(this.getClass(), "Received new drools form from '{}'", createdBy);
 
-            ncaController.newFormReceived(droolsForm);
+            formController.newFormReceived(droolsForm);
 
         } catch (JsonProcessingException e) {
             EventsLogger.severe(this.getClass(), "Event cannot be parsed!!\n" + event);

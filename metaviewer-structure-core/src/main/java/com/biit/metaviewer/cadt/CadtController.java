@@ -1,7 +1,8 @@
 package com.biit.metaviewer.cadt;
 
+import com.biit.metaviewer.Collection;
 import com.biit.metaviewer.controllers.FormController;
-import com.biit.metaviewer.providers.CadtProvider;
+import com.biit.metaviewer.providers.FormProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
@@ -17,37 +18,35 @@ public abstract class CadtController extends FormController {
     private static final int YELLOW_COLOR_LIMIT = 350;
     private static final int LIGHT_GREEN_COLOR_LIMIT = 450;
 
-    protected CadtController(ObjectMapper objectMapper, CadtProvider cadtProvider) {
-        super(objectMapper, cadtProvider);
+    protected CadtController(ObjectMapper objectMapper, FormProvider formProvider) {
+        super(objectMapper, formProvider);
     }
 
-
-    @Override
-    public String getFormName() {
-        return FORM_NAME;
+    public Collection createCollection() {
+        return createCollection(FORM_NAME);
     }
 
-    protected String getColor(Map<String, Object> formVariables) {
-        return getScoreColor((double) formVariables.get(FORM_SCORE_VARIABLE));
+    protected String getColor(String formName, Map<String, Object> formVariables) {
+        return getScoreColor(formName, (double) formVariables.get(FORM_SCORE_VARIABLE));
     }
 
     @Override
-    protected int getRedColorLimit() {
+    protected int getRedColorLimit(String formName) {
         return RED_COLOR_LIMIT;
     }
 
     @Override
-    protected int getOrangeColorLimit() {
+    protected int getOrangeColorLimit(String formName) {
         return ORANGE_COLOR_LIMIT;
     }
 
     @Override
-    protected int getYellowColorLimit() {
+    protected int getYellowColorLimit(String formName) {
         return YELLOW_COLOR_LIMIT;
     }
 
     @Override
-    protected int getLightGreenColorLimit() {
+    protected int getLightGreenColorLimit(String formName) {
         return LIGHT_GREEN_COLOR_LIMIT;
     }
 }

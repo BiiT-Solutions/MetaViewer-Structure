@@ -2,12 +2,13 @@ package com.biit.metaviewer.rest;
 
 import com.biit.metaviewer.cadt.CadtScoreController;
 import com.biit.metaviewer.cadt.CadtValueController;
+import com.biit.metaviewer.controllers.FormController;
 import com.biit.metaviewer.logger.MetaViewerLogger;
-import com.biit.metaviewer.nca.NcaController;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.servers.Server;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
@@ -21,6 +22,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import java.util.List;
 
 //Avoid Swagger redirecting https to http
 @OpenAPIDefinition(servers = {@Server(url = "${server.servlet.context-path}", description = "Default Server URL")})
@@ -36,13 +39,15 @@ public class MetaViewerServer {
     private static final int POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 100;
 
+    @Value("${forms.enabled}")
+    private List<String> formsEnabled;
 
-    private final NcaController ncaController;
+    private final FormController formController;
     private final CadtScoreController cadtScoreController;
     private final CadtValueController cadtValueController;
 
-    public MetaViewerServer(NcaController ncaController, CadtScoreController cadtScoreController, CadtValueController cadtValueController) {
-        this.ncaController = ncaController;
+    public MetaViewerServer(FormController formController, CadtScoreController cadtScoreController, CadtValueController cadtValueController) {
+        this.formController = formController;
         this.cadtScoreController = cadtScoreController;
         this.cadtValueController = cadtValueController;
     }
@@ -80,7 +85,12 @@ public class MetaViewerServer {
     @PostConstruct
     public void onStartup() {
         //Update data when started.
-        ncaController.populateSamplesFolder();
+        if (formsEnabled != null) {
+            formsEnabled.forEach(formName -> {
+                MetaViewerLogger.debug(this.getClass(), "Populating '" + formName + "' folder");
+                formController.populateSamplesFolder(formName);
+            });
+        }
         cadtScoreController.populateSamplesFolder();
         cadtValueController.populateSamplesFolder();
     }
