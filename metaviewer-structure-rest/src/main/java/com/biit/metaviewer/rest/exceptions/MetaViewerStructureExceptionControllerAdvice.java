@@ -1,6 +1,7 @@
 package com.biit.metaviewer.rest.exceptions;
 
 import com.biit.kafka.exceptions.InvalidEventException;
+import com.biit.metaviewer.exceptions.FormFactsNotFoundException;
 import com.biit.metaviewer.exceptions.InvalidFormException;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.biit.server.exceptions.ErrorResponse;
@@ -54,4 +55,12 @@ public class MetaViewerStructureExceptionControllerAdvice extends ServerExceptio
         MetaViewerLogger.errorMessage(this.getClass().getName(), ex);
         return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), "invalid_parameter", ex), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(FormFactsNotFoundException.class)
+    public ResponseEntity<Object> formFactsNotFoundException(Exception ex) {
+        MetaViewerLogger.errorMessage(this.getClass().getName(), ex);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), "facts_not_found", ex), HttpStatus.NOT_FOUND);
+    }
 }
+
+

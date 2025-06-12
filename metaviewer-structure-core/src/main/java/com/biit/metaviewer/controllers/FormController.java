@@ -6,6 +6,7 @@ import com.biit.metaviewer.Facet;
 import com.biit.metaviewer.FacetCategory;
 import com.biit.metaviewer.Item;
 import com.biit.metaviewer.ObjectMapperFactory;
+import com.biit.metaviewer.exceptions.FormFactsNotFoundException;
 import com.biit.metaviewer.exceptions.InvalidFormException;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import com.biit.metaviewer.providers.FormProvider;
@@ -122,7 +123,7 @@ public class FormController {
             return objectMapper.readValue(new File(outputFolder + File.separator + getMetaviewerFileName(formName)), Collection.class);
         } catch (IOException e) {
             MetaViewerLogger.errorMessage(this.getClass(), e);
-            return null;
+            throw new FormFactsNotFoundException(this.getClass(), "No facts can be found for '" + formName + "' form.");
         }
     }
 
@@ -171,11 +172,14 @@ public class FormController {
             return createCollection(getFormProvider().getAll(null, formName));
         } finally {
             stopWatch.stop();
-            MetaViewerLogger.info(this.getClass(), "Collection created in '" + stopWatch.getTotalTimeMillis() + "' ms");
+            MetaViewerLogger.info(this.getClass(), "Collection for '" + formName + "' created in '" + stopWatch.getTotalTimeMillis() + "' ms");
         }
     }
 
     public Collection createCollection(List<DroolsSubmittedForm> droolsSubmittedForms) {
+        if (droolsSubmittedForms.isEmpty()) {
+            throw new FormFactsNotFoundException(this.getClass(), "No facts found");
+        }
         final Collection collection = new Collection(droolsSubmittedForms.get(0).getName(), PIVOTVIEWER_IMAGE_FILE);
         MetaViewerLogger.debug(this.getClass(), "Creating a new collection with '{}' elements.", droolsSubmittedForms.size());
         collection.getFacetCategories().addAll(createFacetsCategories(droolsSubmittedForms.get(0)));
