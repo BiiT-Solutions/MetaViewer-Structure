@@ -73,15 +73,15 @@ public class FormController {
     }
 
     public String getMetaviewerFileName(String formName) {
-        return formName + ".json";
+        return normalizeFormName(formName) + ".json";
     }
 
     public String getPivotviewerFileName(String formName) {
-        return formName + ".cxml";
+        return normalizeFormName(formName) + ".cxml";
     }
 
     protected String getPivotViewerLink(String formName) {
-        return "/" + formName;
+        return "/" + normalizeFormName(formName);
     }
 
     protected List<FacetCategory> createFacetsCategories(DroolsSubmittedForm droolsSubmittedForm) {
@@ -264,7 +264,7 @@ public class FormController {
         return formsProperties;
     }
 
-    private String getFormProperty(String formName) {
+    private String normalizeFormName(String formName) {
         if (formName == null) {
             return null;
         }
@@ -275,7 +275,7 @@ public class FormController {
         final Properties formsProperties = getFormsProperties();
         if (formsProperties != null) {
             try {
-                return Integer.parseInt(formsProperties.getProperty(getFormProperty(formName) + ".red.limit"));
+                return Integer.parseInt(formsProperties.getProperty(normalizeFormName(formName) + ".red.limit"));
             } catch (NumberFormatException e) {
                 MetaViewerLogger.errorMessage(this.getClass(), e);
             }
@@ -287,7 +287,7 @@ public class FormController {
         final Properties formsProperties = getFormsProperties();
         if (formsProperties != null) {
             try {
-                return Integer.parseInt(formsProperties.getProperty(getFormProperty(formName) + ".orange.limit"));
+                return Integer.parseInt(formsProperties.getProperty(normalizeFormName(formName) + ".orange.limit"));
             } catch (NumberFormatException e) {
                 MetaViewerLogger.errorMessage(this.getClass(), e);
             }
@@ -299,7 +299,7 @@ public class FormController {
         final Properties formsProperties = getFormsProperties();
         if (formsProperties != null) {
             try {
-                return Integer.parseInt(formsProperties.getProperty(getFormProperty(formName) + ".yellow.limit"));
+                return Integer.parseInt(formsProperties.getProperty(normalizeFormName(formName) + ".yellow.limit"));
             } catch (NumberFormatException e) {
                 MetaViewerLogger.errorMessage(this.getClass(), e);
             }
@@ -311,7 +311,7 @@ public class FormController {
         final Properties formsProperties = getFormsProperties();
         if (formsProperties != null) {
             try {
-                return Integer.parseInt(formsProperties.getProperty(getFormProperty(formName) + ".light-green.limit"));
+                return Integer.parseInt(formsProperties.getProperty(normalizeFormName(formName) + ".light-green.limit"));
             } catch (NumberFormatException e) {
                 MetaViewerLogger.errorMessage(this.getClass(), e);
             }
