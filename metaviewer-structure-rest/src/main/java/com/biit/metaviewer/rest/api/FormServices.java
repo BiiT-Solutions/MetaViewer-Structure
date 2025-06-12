@@ -32,8 +32,8 @@ public class FormServices {
 
 
     @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
-    @Operation(summary = "Gets NCA result as json.", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping(value = "/${formName}/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Gets Form result as json.", security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping(value = "/{formName}/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection createScoreJson(@Parameter(description = "Name of the form", required = true)
                                       @PathVariable("formName") String formName,
                                       Authentication authentication, HttpServletResponse response) {
@@ -42,8 +42,8 @@ public class FormServices {
 
 
     @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
-    @Operation(summary = "Gets NCA score result as xml.", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping(value = "/${formName}/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
+    @Operation(summary = "Gets Form score result as xml.", security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping(value = "/{formName}/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public String createScoreXml(@Parameter(description = "Name of the form", required = true)
                                  @PathVariable("formName") String formName,
                                  Authentication authentication, HttpServletResponse response) throws JsonProcessingException {
@@ -52,8 +52,8 @@ public class FormServices {
 
 
     @PreAuthorize("hasAnyAuthority(@securityService.editorPrivilege, @securityService.adminPrivilege)")
-    @Operation(summary = "Regenerates NCA result as xml and json and stores it to a file.", security = @SecurityRequirement(name = "bearerAuth"))
-    @PutMapping(value = "/${formName}/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
+    @Operation(summary = "Regenerates Form result as xml and json and stores it to a file.", security = @SecurityRequirement(name = "bearerAuth"))
+    @PutMapping(value = "/{formName}/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void refreshScore(@Parameter(description = "Name of the form", required = true)
                              @PathVariable("formName") String formName,

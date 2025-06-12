@@ -30,6 +30,7 @@ import java.util.List;
 @SpringBootApplication
 @PropertySources({
         @PropertySource("classpath:application.properties"),
+        @PropertySource("classpath:forms.properties"),
         @PropertySource(value = "file:${EXTERNAL_CONFIG_FILE}", ignoreResourceNotFound = true)
 })
 @ComponentScan(basePackages = {"com.biit.metaviewer", "com.biit.server.security", "com.biit.server", "com.biit.messagebird.client",
