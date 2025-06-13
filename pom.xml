@@ -5,7 +5,7 @@
     <groupId>com.biit</groupId>
     <artifactId>metaviewer-structure</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.31-SNAPSHOT</version>
+    <version>0.1.32-SNAPSHOT</version>
     <name>MetaViewer Structure</name>
 
     <parent>
