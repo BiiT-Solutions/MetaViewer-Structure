@@ -17,6 +17,7 @@ public class MetaViewerSecurityService extends SecurityService {
     private String adminPrivilege = null;
     private String editorPrivilege = null;
 
+    @Override
     public String getViewerPrivilege() {
         if (viewerPrivilege == null) {
             viewerPrivilege = VIEWER.toUpperCase();
@@ -24,6 +25,7 @@ public class MetaViewerSecurityService extends SecurityService {
         return viewerPrivilege;
     }
 
+    @Override
     public String getAdminPrivilege() {
         if (adminPrivilege == null) {
             adminPrivilege = ADMIN.toUpperCase();
@@ -31,6 +33,7 @@ public class MetaViewerSecurityService extends SecurityService {
         return adminPrivilege;
     }
 
+    @Override
     public String getEditorPrivilege() {
         if (editorPrivilege == null) {
             editorPrivilege = EDITOR.toUpperCase();

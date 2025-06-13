@@ -26,6 +26,7 @@ public abstract class CadtController extends FormController {
         return createCollection(FORM_NAME);
     }
 
+    @Override
     protected String getColor(String formName, Map<String, Object> formVariables) {
         return getScoreColor(formName, (double) formVariables.get(FORM_SCORE_VARIABLE));
     }

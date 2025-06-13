@@ -1,13 +1,9 @@
 package com.biit.metaviewer.rest;
 
-import com.biit.metaviewer.cadt.CadtScoreController;
-import com.biit.metaviewer.cadt.CadtValueController;
-import com.biit.metaviewer.controllers.FormController;
 import com.biit.metaviewer.logger.MetaViewerLogger;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
@@ -19,11 +15,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import java.util.List;
-
+@EnableScheduling
 //Avoid Swagger redirecting https to http
 @OpenAPIDefinition(servers = {@Server(url = "${server.servlet.context-path}", description = "Default Server URL")})
 @SpringBootApplication
@@ -38,19 +34,6 @@ import java.util.List;
 public class MetaViewerServer {
     private static final int POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 100;
-
-    @Value("${forms.enabled}")
-    private List<String> formsEnabled;
-
-    private final FormController formController;
-    private final CadtScoreController cadtScoreController;
-    private final CadtValueController cadtValueController;
-
-    public MetaViewerServer(FormController formController, CadtScoreController cadtScoreController, CadtValueController cadtValueController) {
-        this.formController = formController;
-        this.cadtScoreController = cadtScoreController;
-        this.cadtValueController = cadtValueController;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(MetaViewerServer.class, args);

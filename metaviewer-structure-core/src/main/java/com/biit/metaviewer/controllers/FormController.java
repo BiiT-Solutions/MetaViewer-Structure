@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
 
@@ -63,6 +64,9 @@ public class FormController {
 
     private Properties formsProperties;
 
+    @Value("${forms.enabled}")
+    private List<String> formsEnabled;
+
     public FormController(ObjectMapper objectMapper, FormProvider formProvider) {
         this.objectMapper = objectMapper;
         this.formProvider = formProvider;
@@ -99,18 +103,18 @@ public class FormController {
         //Score by archetypes
         final List<Facet<?>> facets = new ArrayList<>();
 
-        for (String variable : formVariables.keySet()) {
-            final String value = formVariables.get(variable).toString();
+        for (Map.Entry<String, Object> variable : formVariables.entrySet()) {
+            final String value = variable.getValue().toString();
             try {
-                facets.add(new Facet<>(variable, new DateTimeType(LocalDateTime.parse(value))));
+                facets.add(new Facet<>(variable.getKey(), new DateTimeType(LocalDateTime.parse(value))));
             } catch (DateTimeException e) {
                 try {
-                    facets.add(new Facet<>(variable, new NumberType(Double.parseDouble(value))));
+                    facets.add(new Facet<>(variable.getKey(), new NumberType(Double.parseDouble(value))));
                 } catch (NumberFormatException e1) {
                     if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
-                        facets.add(new Facet<>(variable, new BooleanType(Boolean.parseBoolean(value))));
+                        facets.add(new Facet<>(variable.getKey(), new BooleanType(Boolean.parseBoolean(value))));
                     } else {
-                        facets.add(new Facet<>(variable, new StringType(value)));
+                        facets.add(new Facet<>(variable.getKey(), new StringType(value)));
                     }
                 }
             }
@@ -343,5 +347,17 @@ public class FormController {
         MetaViewerLogger.debug(this.getClass(), "Score is '" + score + "' that is above '" + getLightGreenColorLimit(formName)
                 + "'. So color is Dark Green.");
         return DARK_GREEN_COLOR_TAG;
+    }
+
+    @Scheduled(cron = "0 0 2 * * *")
+    public void populateSamplesFolder() {
+        try {
+            for (String formName : formsEnabled) {
+                MetaViewerLogger.info(this.getClass(), "Populating form '" + formName + "'");
+                populateSamplesFolder(formName);
+            }
+        } catch (Exception e) {
+            MetaViewerLogger.errorMessage(this.getClass(), e);
+        }
     }
 }

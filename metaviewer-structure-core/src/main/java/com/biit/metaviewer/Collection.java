@@ -22,10 +22,10 @@ public class Collection {
     private static final int HASH_KEY = 31;
 
     @JacksonXmlProperty(isAttribute = true, localName = "xmlns")
-    private final String xmlns = "http://schemas.microsoft.com/collection/metadata/2009";
+    private static final String XMLNS = "http://schemas.microsoft.com/collection/metadata/2009";
 
     @JacksonXmlProperty(isAttribute = true, localName = "SchemaVersion")
-    private final String schemaVersion = "1.0";
+    private static final String SCHEMA_VERSION = "1.0";
 
     @JacksonXmlProperty(isAttribute = true, localName = "Name")
     private String name;
@@ -65,11 +65,11 @@ public class Collection {
     }
 
     public String getXmlns() {
-        return xmlns;
+        return XMLNS;
     }
 
     public String getSchemaVersion() {
-        return schemaVersion;
+        return SCHEMA_VERSION;
     }
 
     public String getName() {

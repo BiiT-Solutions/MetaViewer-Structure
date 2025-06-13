@@ -5,7 +5,6 @@ import com.biit.metaviewer.types.BooleanType;
 import com.biit.metaviewer.types.DateTimeType;
 import com.biit.metaviewer.types.NumberType;
 import com.biit.metaviewer.types.StringType;
-import com.biit.metaviewer.types.Type;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
-public class FacetDeserializer<E extends Type> extends JsonDeserializer<Facet<?>> {
+public class FacetDeserializer extends JsonDeserializer<Facet<?>> {
 
     @Override
     public Facet<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {

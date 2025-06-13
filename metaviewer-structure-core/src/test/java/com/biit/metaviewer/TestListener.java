@@ -6,7 +6,6 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 public class TestListener implements ITestListener {
-    private static final String SCREENSHOT_TYPE = ".png";
 
     @Override
     public void onTestStart(ITestResult result) {

@@ -9,7 +9,6 @@ import com.biit.kafka.logger.EventsLogger;
 import com.biit.metaviewer.cadt.CadtController;
 import com.biit.metaviewer.cadt.CadtScoreController;
 import com.biit.metaviewer.cadt.CadtValueController;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Controller;
@@ -70,16 +69,13 @@ public class CadtEventController {
             cadtValueController.newFormReceived(droolsForm);
             cadtScoreController.newFormReceived(droolsForm);
 
-        } catch (JsonProcessingException e) {
-            EventsLogger.severe(this.getClass(), "Event cannot be parsed!!\n" + event);
-            EventsLogger.errorMessage(this.getClass(), e);
         } catch (Exception e) {
             EventsLogger.severe(this.getClass(), "Invalid event received!!\n" + event);
             EventsLogger.errorMessage(this.getClass(), e);
         }
     }
 
-    private DroolsSubmittedForm getDroolsForm(Event event) throws JsonProcessingException {
+    private DroolsSubmittedForm getDroolsForm(Event event) {
         return event.getEntity(DroolsSubmittedForm.class);
     }
 }

@@ -15,7 +15,6 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class FormProvider {
@@ -56,6 +55,6 @@ public class FormProvider {
                 MetaViewerLogger.errorMessage(this.getClass(), e);
             }
             return null;
-        }).filter(Objects::nonNull).collect(Collectors.toList());
+        }).filter(Objects::nonNull).toList();
     }
 }
