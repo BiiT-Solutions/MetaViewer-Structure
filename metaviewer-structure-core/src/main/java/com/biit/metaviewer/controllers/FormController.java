@@ -153,8 +153,9 @@ public class FormController {
     public synchronized void newFormReceived(DroolsSubmittedForm droolsSubmittedForm) {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
+        Collection storedCollection;
         try {
-            Collection storedCollection = readSamplesFolder(droolsSubmittedForm.getName());
+            storedCollection = readSamplesFolder(droolsSubmittedForm.getName());
             if (storedCollection != null) {
                 MetaViewerLogger.debug(this.getClass(), "Updating existing collection.");
                 updateCollection(storedCollection, droolsSubmittedForm);
@@ -162,11 +163,15 @@ public class FormController {
                 MetaViewerLogger.debug(this.getClass(), "Creating a new collection.");
                 storedCollection = createCollection(getFormProvider().getAll(null, droolsSubmittedForm.getName()));
             }
-            populateSamplesFolder(storedCollection, droolsSubmittedForm.getName());
+        } catch (Exception e) {
+            MetaViewerLogger.debug(this.getClass(), "Creating a new collection.");
+            storedCollection = createCollection(getFormProvider().getAll(null, droolsSubmittedForm.getName()));
         } finally {
             stopWatch.stop();
             MetaViewerLogger.info(this.getClass(), "Collection updated in '" + stopWatch.getTotalTimeMillis() + "' ms");
         }
+
+        populateSamplesFolder(storedCollection, droolsSubmittedForm.getName());
     }
 
     public Collection createCollection(String formName) {
@@ -204,8 +209,10 @@ public class FormController {
 
     public void updateCollection(Collection collection, DroolsSubmittedForm droolsSubmittedForm) {
         final Item item = generateItem(droolsSubmittedForm);
-        //If it has data, include it. All has submittedAt facet.
+        //If it has data, include it. All has submittedAt facet, so size > 1.
         if (item.getFacets().size() > 1) {
+            //Remove old item for the same user. Avoid duplicates.
+            collection.getItems().getItems().removeIf(i -> Objects.equals(i.getName(), item.getName()));
             MetaViewerLogger.info(this.getClass(), "Adding one new item to collection.");
             collection.getItems().getItems().add(item);
         } else {
@@ -238,9 +245,6 @@ public class FormController {
     protected Item generateItem(DroolsSubmittedForm droolsSubmittedForm) {
         if (droolsSubmittedForm == null) {
             throw new InvalidFormException("DroolsSubmittedForm is null.");
-        }
-        if (!Objects.equals(droolsSubmittedForm.getName(), droolsSubmittedForm.getName())) {
-            throw new InvalidFormException("Form '" + droolsSubmittedForm.getName() + "' is not the correct form.");
         }
         final Map<String, Object> formVariables = droolsSubmittedForm.getFormVariables().get("/DroolsSubmittedForm[@label='"
                 + droolsSubmittedForm.getName() + "']");
