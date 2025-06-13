@@ -211,7 +211,7 @@ public class FormController {
         final Item item = generateItem(droolsSubmittedForm);
         //If it has data, include it. All has submittedAt facet, so size > 1.
         if (item.getFacets().size() > 1) {
-            //Remove old item for the same user. Avoid duplicates.
+            //Remove old item for the same user. Avoid duplicates. Name has the createdBy.
             collection.getItems().getItems().removeIf(i -> Objects.equals(i.getName(), item.getName()));
             MetaViewerLogger.info(this.getClass(), "Adding one new item to collection.");
             collection.getItems().getItems().add(item);
