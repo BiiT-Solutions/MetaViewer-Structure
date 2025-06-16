@@ -236,9 +236,14 @@ public class FormController {
     protected String getColor(String formName, Map<String, Object> formVariables) {
         double totalScore = 0;
         for (Map.Entry<String, Object> entry : formVariables.entrySet()) {
-            totalScore += Double.parseDouble(entry.getValue().toString());
+            try {
+                totalScore += Double.parseDouble(entry.getValue().toString());
+            } catch (NumberFormatException e) {
+                MetaViewerLogger.warning(this.getClass(), "Cannot parse form variable '" + entry.getKey() + "' with value '"
+                        + entry.getValue() + "'. Ignored!");
+            }
         }
-        MetaViewerLogger.info(this.getClass(), "Total color for '" + formName + "' is '" + totalScore + "'.");
+        MetaViewerLogger.info(this.getClass(), "Total score for '" + formName + "' is '" + totalScore + "'.");
         return getScoreColor(formName, totalScore);
     }
 
