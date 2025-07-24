@@ -150,7 +150,7 @@ public class RandomCadtGenerationTest {
         }
 
         //Total Score by rules
-        final Item item = new Item(getColor((int) total), "/cadt", "Test " + items++);
+        final Item item = new Item(getColor((int) total), "/cadt", "Test " + items++, null);
         item.getFacets().addAll(facets);
         return item;
     }

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @JacksonXmlRootElement(localName = "Collection")
 @JsonPropertyOrder(alphabetic = true)
@@ -106,5 +107,16 @@ public class Collection {
         result = HASH_KEY * result + facetCategories.hashCode();
         result = HASH_KEY * result + items.hashCode();
         return result;
+    }
+
+    public Collection filterByOrganization(String organization) {
+        final Collection collection = new Collection();
+        collection.setName(this.getName());
+        collection.setFacetCategories(this.getFacetCategories());
+        collection.setCreatedAt(this.getCreatedAt());
+        final Items filteredItems = new Items();
+        collection.setItems(filteredItems);
+        filteredItems.setItems(this.getItems().getItems().stream().filter(item -> Objects.equals(item.getOrganization(), organization)).toList());
+        return collection;
     }
 }

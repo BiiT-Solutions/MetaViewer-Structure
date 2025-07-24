@@ -66,8 +66,8 @@ public class CadtEventController {
 
             EventsLogger.info(this.getClass(), "Received new drools form from '{}'", createdBy);
 
-            cadtValueController.newFormReceived(droolsForm);
-            cadtScoreController.newFormReceived(droolsForm);
+            cadtValueController.newFormReceived(droolsForm, event.getOrganization() != null ? event.getOrganization() : droolsForm.getOrganization());
+            cadtScoreController.newFormReceived(droolsForm, event.getOrganization() != null ? event.getOrganization() : droolsForm.getOrganization());
 
         } catch (Exception e) {
             EventsLogger.severe(this.getClass(), "Invalid event received!!\n" + event);

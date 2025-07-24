@@ -22,11 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/forms")
-public class FormServices {
+public class FormServices extends OrganizationBaseService {
 
     private final FormController formController;
 
-    public FormServices(FormController formController) {
+    public FormServices(FormController formController, MetaViewerSecurityService securityService) {
+        super(securityService);
         this.formController = formController;
     }
 
@@ -37,7 +38,7 @@ public class FormServices {
     public Collection createScoreJson(@Parameter(description = "Name of the form", required = true)
                                       @PathVariable("formName") String formName,
                                       Authentication authentication, HttpServletResponse response) {
-        return formController.readSamplesFolder(formName);
+        return getCollection(authentication, formController, formName);
     }
 
 
@@ -47,7 +48,7 @@ public class FormServices {
     public String createScoreXml(@Parameter(description = "Name of the form", required = true)
                                  @PathVariable("formName") String formName,
                                  Authentication authentication, HttpServletResponse response) throws JsonProcessingException {
-        return ObjectMapperFactory.generateXml(formController.readSamplesFolder(formName));
+        return ObjectMapperFactory.generateXml(getCollection(authentication, formController, formName));
     }
 
 

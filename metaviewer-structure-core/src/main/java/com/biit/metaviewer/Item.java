@@ -29,6 +29,9 @@ public class Item {
     @JacksonXmlProperty(isAttribute = true, localName = "Name")
     private String name;
 
+    @JacksonXmlProperty(isAttribute = true, localName = "Organization")
+    private String organization;
+
     @JacksonXmlElementWrapper(localName = "Facets")
     @JacksonXmlProperty(localName = "Facet")
     private List<Facet<?>> facets;
@@ -36,11 +39,12 @@ public class Item {
     public Item() {
     }
 
-    public Item(String img, String href, String name) {
+    public Item(String img, String href, String name, String organization) {
         this.id = UUID.randomUUID();
         this.img = img;
         this.href = href;
         this.name = name;
+        this.organization = organization;
         facets = new ArrayList<>();
     }
 
@@ -82,6 +86,14 @@ public class Item {
 
     public List<Facet<?>> getFacets() {
         return facets;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
     @Override

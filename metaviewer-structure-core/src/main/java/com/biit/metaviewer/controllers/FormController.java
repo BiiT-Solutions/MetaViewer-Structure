@@ -14,6 +14,7 @@ import com.biit.metaviewer.types.BooleanType;
 import com.biit.metaviewer.types.DateTimeType;
 import com.biit.metaviewer.types.NumberType;
 import com.biit.metaviewer.types.StringType;
+import com.biit.utils.file.FileReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -124,7 +125,7 @@ public class FormController {
 
     public Collection readSamplesFolder(String formName) {
         try {
-            return objectMapper.readValue(new File(outputFolder + File.separator + getMetaviewerFileName(formName)), Collection.class);
+            return objectMapper.readValue(FileReader.sanitizePath(outputFolder + File.separator, getMetaviewerFileName(formName)).toFile(), Collection.class);
         } catch (IOException e) {
             MetaViewerLogger.errorMessage(this.getClass(), e);
             throw new FormFactsNotFoundException(this.getClass(), "No facts can be found for '" + formName + "' form.");
@@ -132,13 +133,14 @@ public class FormController {
     }
 
     public void populateSamplesFolder(String formName) {
+        formName = FileReader.sanitizePath(formName).toString();
         populateSamplesFolder(createCollection(formName), formName);
     }
 
     protected void populateSamplesFolder(Collection collection, String formName) {
         try {
-            try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
-                    + File.separator + getPivotviewerFileName(formName), false), StandardCharsets.UTF_8)))) {
+            try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+                    FileReader.sanitizePath(outputFolder + File.separator, getPivotviewerFileName(formName)).toString(), false), StandardCharsets.UTF_8)))) {
                 out.println(ObjectMapperFactory.generateXml(collection));
             }
             try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFolder
@@ -150,11 +152,12 @@ public class FormController {
         }
     }
 
-    public synchronized void newFormReceived(DroolsSubmittedForm droolsSubmittedForm) {
+    public synchronized void newFormReceived(DroolsSubmittedForm droolsSubmittedForm, String organization) {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         Collection storedCollection;
         try {
+            droolsSubmittedForm.setOrganization(organization);
             storedCollection = readSamplesFolder(droolsSubmittedForm.getName());
             if (storedCollection != null) {
                 MetaViewerLogger.debug(this.getClass(), "Updating existing collection.");
@@ -260,7 +263,8 @@ public class FormController {
         final List<Facet<?>> facets = new ArrayList<>(basicData(droolsSubmittedForm.getSubmittedAt()));
         populateFacets(facets, droolsSubmittedForm, formVariables);
         final Item item = new Item(getColor(droolsSubmittedForm.getName(), formVariables),
-                getPivotViewerLink(droolsSubmittedForm.getName()), droolsSubmittedForm.getSubmittedBy());
+                getPivotViewerLink(droolsSubmittedForm.getName()), droolsSubmittedForm.getSubmittedBy(),
+                droolsSubmittedForm.getOrganization());
         item.getFacets().addAll(facets);
         return item;
     }

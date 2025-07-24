@@ -63,7 +63,7 @@ public class FormEventController {
 
             EventsLogger.info(this.getClass(), "Received new drools form from '{}'", createdBy);
 
-            formController.newFormReceived(droolsForm);
+            formController.newFormReceived(droolsForm, event.getOrganization() != null ? event.getOrganization() : droolsForm.getOrganization());
 
         } catch (Exception e) {
             EventsLogger.severe(this.getClass(), "Invalid event received!!\n" + event);

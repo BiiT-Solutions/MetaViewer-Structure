@@ -72,7 +72,8 @@ public class NcaTest extends AbstractTestNGSpringContextTests {
         }
     }
 
-    @Test
+    //Depens on having NCA forms in Testing.
+    @Test(enabled = false)
     public void convertFactsToMetaViewer() throws IOException {
         final Collection collection = formController.createCollection(FORM);
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FOLDER
@@ -87,7 +88,9 @@ public class NcaTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void jsonSerialization() throws IOException {
-        final Collection collection = formController.createCollection(FORM);
+        final List<DroolsSubmittedForm> droolsSubmittedForms = List.of(DroolsSubmittedForm.getFromJson(FileReader
+                .getResource(DROOLS_FORM_FILE_PATH, StandardCharsets.UTF_8)));
+        final Collection collection = formController.createCollection(droolsSubmittedForms);
         String jsonCode = ObjectMapperFactory.generateJson(collection);
         final Collection importedCollection = objectMapper.readValue(jsonCode, Collection.class);
         Assert.assertEquals(collection.getItems().getItems().size(), importedCollection.getItems().getItems().size());
