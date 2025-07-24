@@ -39,12 +39,12 @@ public class CadtScoreController extends CadtController {
 
     @Override
     public String getMetaviewerFileName(String formName) {
-        return METAVIEWER_FILE;
+        return normalizeFormName(METAVIEWER_FILE);
     }
 
     @Override
     public String getPivotviewerFileName(String formName) {
-        return PIVOTVIEWER_FILE;
+        return normalizeFormName(PIVOTVIEWER_FILE);
     }
 
 

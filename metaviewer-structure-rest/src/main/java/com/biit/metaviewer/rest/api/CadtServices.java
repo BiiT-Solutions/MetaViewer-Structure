@@ -35,7 +35,8 @@ public class CadtServices extends OrganizationBaseService {
     }
 
 
-    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
+    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege,"
+            + "@securityService.organizationAdminPrivilege)")
     @Operation(summary = "Gets CADT score result as json.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/scores/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection createScoreJson(Authentication authentication, HttpServletResponse response) {
@@ -43,7 +44,8 @@ public class CadtServices extends OrganizationBaseService {
     }
 
 
-    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
+    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege,"
+            + "@securityService.organizationAdminPrivilege)")
     @Operation(summary = "Gets CADT score result as xml.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/scores/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public String createScoreXml(Authentication authentication, HttpServletResponse response) throws JsonProcessingException {
@@ -51,7 +53,8 @@ public class CadtServices extends OrganizationBaseService {
     }
 
 
-    @PreAuthorize("hasAnyAuthority(@securityService.editorPrivilege, @securityService.adminPrivilege)")
+    @PreAuthorize("hasAnyAuthority(@securityService.editorPrivilege, @securityService.adminPrivilege,"
+            + "@securityService.organizationAdminPrivilege)")
     @Operation(summary = "Regenerates CADT score result as xml and json and stores it to a file.", security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping(value = "/scores/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -60,7 +63,8 @@ public class CadtServices extends OrganizationBaseService {
     }
 
 
-    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
+    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege,"
+            + "@securityService.organizationAdminPrivilege)")
     @Operation(summary = "Gets CADT result as json.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/values/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection createJson(Authentication authentication, HttpServletResponse response) {

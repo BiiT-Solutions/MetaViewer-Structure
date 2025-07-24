@@ -32,7 +32,8 @@ public class FormServices extends OrganizationBaseService {
     }
 
 
-    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
+    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege,"
+            + "@securityService.organizationAdminPrivilege)")
     @Operation(summary = "Gets Form result as json.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/{formName}/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection createScoreJson(@Parameter(description = "Name of the form", required = true)
@@ -42,7 +43,8 @@ public class FormServices extends OrganizationBaseService {
     }
 
 
-    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege)")
+    @PreAuthorize("hasAnyAuthority(@securityService.viewerPrivilege, @securityService.editorPrivilege, @securityService.adminPrivilege,"
+            + "@securityService.organizationAdminPrivilege)")
     @Operation(summary = "Gets Form score result as xml.", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(value = "/{formName}/xml", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     public String createScoreXml(@Parameter(description = "Name of the form", required = true)
@@ -52,7 +54,8 @@ public class FormServices extends OrganizationBaseService {
     }
 
 
-    @PreAuthorize("hasAnyAuthority(@securityService.editorPrivilege, @securityService.adminPrivilege)")
+    @PreAuthorize("hasAnyAuthority(@securityService.editorPrivilege, @securityService.adminPrivilege,"
+            + "@securityService.organizationAdminPrivilege)")
     @Operation(summary = "Regenerates Form result as xml and json and stores it to a file.", security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping(value = "/{formName}/refresh", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)

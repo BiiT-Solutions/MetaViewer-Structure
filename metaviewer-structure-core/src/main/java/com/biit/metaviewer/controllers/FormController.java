@@ -133,7 +133,6 @@ public class FormController {
     }
 
     public void populateSamplesFolder(String formName) {
-        formName = FileReader.sanitizePath(formName).toString();
         populateSamplesFolder(createCollection(formName), formName);
     }
 
@@ -281,11 +280,11 @@ public class FormController {
         return formsProperties;
     }
 
-    private String normalizeFormName(String formName) {
+    protected String normalizeFormName(String formName) {
         if (formName == null) {
             return null;
         }
-        return "form." + formName.toLowerCase().replace(" ", "-");
+        return "form." + formName.toLowerCase().replace(" ", "_");
     }
 
     protected int getRedColorLimit(String formName) {
