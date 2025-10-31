@@ -5,13 +5,13 @@
     <groupId>com.biit-solutions</groupId>
     <artifactId>metaviewer-structure-core</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.34-SNAPSHOT</version>
+    <version>0.1.34</version>
     <name>MetaViewer Structure (Core)</name>
 
     <parent>
         <groupId>com.biit-solutions</groupId>
         <artifactId>metaviewer-structure</artifactId>
-        <version>0.1.34-SNAPSHOT</version>
+        <version>0.1.34</version>
     </parent>
 
     <properties>
