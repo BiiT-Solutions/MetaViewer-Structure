@@ -1,4 +1,8 @@
-# Add a new form
+# Metaview Structure
+
+This tool prepare the data to be used in the Metaviewer UX component. 
+
+## Adding a new form
 On the file `forms.properties` add the form name and include the color limits. 
 
 For example, for a form called `PersonalData`, configure it as follows:
