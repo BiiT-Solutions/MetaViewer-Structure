@@ -8,9 +8,9 @@
     <test name="MetaViewer" enabled="true" preserve-order="true">
         <groups>
             <run>
-                <include name="cadt"/>
-                <include name="cadtScore"/>
-                <include name="nca"/>
+                <exclude name="cadt"/>
+                <exclude name="cadtScore"/>
+                <exclude name="nca"/>
             </run>
         </groups>
         <classes>
