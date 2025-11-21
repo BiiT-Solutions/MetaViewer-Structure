@@ -1,6 +1,6 @@
 # Metaview Structure
 
-This tool prepare the data to be used in the Metaviewer UX component. 
+This tool prepares the data to be used in the Metaviewer UX component. 
 
 ## Adding a new form
 On the file `forms.properties` add the form name and include the color limits. 
